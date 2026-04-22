@@ -1,0 +1,1471 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Regal Credit Management · Enrollment Portal</title>
+<meta name="description" content="Enrollment, self-serve, and business-manager portal for Regal Credit Management." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* =========================================================
+   REGAL CREDIT MANAGEMENT · ENROLLMENT PORTAL
+   Tokens mirror enrollment-design-system.html · TRD v3 §10
+   ========================================================= */
+:root{
+  --orange-600:#F24E24;--orange-700:#D83E15;--orange-500:#F46619;--orange-050:#FFF1EC;
+  --navy-900:#082639;--navy-800:#102E44;--navy-700:#314663;--navy-050:#E8EEF3;
+  --sky-300:#AACFDF;--sky-100:#DCE9F0;
+  --mauve-300:#BDA3B7;
+  --canvas:#FAF5F0;--surface:#FFFFFF;--border:#E3DDD5;
+  --ink:#0C1B26;--ink-sub:#3A4C5A;--muted:#6B7C8A;
+  --success-600:#2F8A5C;--success-050:#E8F5EE;
+  --warning-600:#B07200;--warning-050:#FFF4DC;
+  --danger-600:#B23220;--danger-050:#FDECE7;
+  --info-600:#2E6A8A;--info-050:#E5F1F7;
+  --font-d:"Fraunces",Georgia,serif;
+  --font-s:"Inter",-apple-system,Segoe UI,Roboto,sans-serif;
+  --r-sm:6px;--r-md:10px;--r-lg:16px;--r-xl:24px;--r-pill:999px;
+  --s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:20px;--s-6:24px;--s-8:32px;--s-10:40px;--s-12:48px;--s-16:64px;
+  --sh-1:0 1px 2px rgba(8,38,57,.06);
+  --sh-2:0 8px 22px rgba(8,38,57,.10);
+  --sh-3:0 16px 36px rgba(8,38,57,.14);
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--canvas);color:var(--ink);font-family:var(--font-s);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--font-d);color:var(--navy-900);margin:0}
+a{color:var(--orange-600)}
+a:hover{color:var(--orange-700)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* Partner theme override — applied on <html data-theme="rbc"> */
+html[data-theme="rbc"]{--orange-600:#FEDF01;--orange-700:#FFCC00;--orange-050:#FFF7C6;--navy-900:#003168;--navy-800:#00437A;--navy-700:#00529F;--navy-050:#E6EEF7}
+
+/* ---------- Top nav ---------- */
+.topnav{background:var(--navy-900);color:#fff;position:sticky;top:0;z-index:40}
+.topnav-inner{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:var(--s-5)}
+.brand{display:flex;align-items:center;gap:var(--s-3);text-decoration:none;color:#fff}
+.brand-mark{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--orange-600),var(--orange-700));display:grid;place-items:center;font-family:var(--font-d);font-weight:700;color:#fff}
+.brand-word{font-family:var(--font-d);font-weight:700;letter-spacing:.08em;font-size:16px;line-height:1}
+.brand-sub{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--sky-300);margin-top:2px}
+.nav-spacer{flex:1}
+.nav-a{color:#D6E0E8;text-decoration:none;font-size:14px;padding:8px 12px;border-radius:6px;transition:background 180ms}
+.nav-a:hover{background:rgba(170,207,223,.1);color:#fff}
+.nav-a[data-active="true"]{color:#fff;background:rgba(170,207,223,.15)}
+.nav-user{display:flex;align-items:center;gap:10px;padding:6px 12px;background:rgba(255,255,255,.06);border-radius:var(--r-pill);font-size:13px}
+.nav-user .avatar{width:26px;height:26px;border-radius:50%;background:var(--orange-600);color:#fff;display:grid;place-items:center;font-weight:700;font-size:12px}
+
+/* Breadcrumb bar */
+.crumbs{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 24px}
+.crumbs-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:var(--s-2);font-size:12px;color:var(--muted);font-family:ui-monospace,Menlo,monospace}
+.crumbs a{color:var(--muted);text-decoration:none}
+.crumbs a:hover{color:var(--orange-600)}
+.crumbs .sep{color:var(--border)}
+.crumbs .env-chip{margin-left:auto;background:var(--navy-050);color:var(--navy-700);padding:3px 10px;border-radius:var(--r-pill);font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;font-family:var(--font-s)}
+
+/* Page shell */
+.page{max-width:1200px;margin:0 auto;padding:var(--s-10) var(--s-6)}
+.page--tight{max-width:880px}
+.page--narrow{max-width:600px}
+
+.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange-600);font-weight:700}
+.h-display{font-family:var(--font-d);font-size:clamp(36px,4.5vw,56px);line-height:1.05;letter-spacing:-.015em;font-weight:700;color:var(--navy-900);margin:var(--s-3) 0 var(--s-4)}
+.h1{font-family:var(--font-d);font-size:36px;line-height:1.1;font-weight:700;margin:0 0 var(--s-3);color:var(--navy-900)}
+.h2{font-family:var(--font-d);font-size:26px;line-height:1.2;font-weight:700;margin:0 0 var(--s-2)}
+.h3{font-family:var(--font-s);font-size:17px;line-height:1.35;font-weight:600;margin:0 0 var(--s-2);color:var(--navy-900)}
+.lede{font-size:17px;color:var(--ink-sub);max-width:65ch}
+.small{font-size:13px;color:var(--muted)}
+.text-success{color:var(--success-600)}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:13px 22px;border-radius:var(--r-md);font-weight:600;font-size:15px;border:1.5px solid transparent;cursor:pointer;background:transparent;font-family:inherit;min-height:48px;min-width:120px;transition:all 180ms var(--ease);line-height:1}
+.btn:focus-visible{outline:3px solid var(--sky-300);outline-offset:2px}
+.btn:active{transform:translateY(1px)}
+.btn--primary{background:var(--orange-600);color:#fff}
+.btn--primary:hover{background:var(--orange-700);box-shadow:var(--sh-2)}
+.btn--secondary{background:var(--navy-900);color:#fff}
+.btn--secondary:hover{background:var(--navy-800)}
+.btn--ghost{background:transparent;color:var(--navy-900);border-color:var(--navy-900)}
+.btn--ghost:hover{background:var(--navy-050)}
+.btn--link{color:var(--orange-600);padding:6px 8px;min-height:auto;min-width:auto;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.btn--link:hover{color:var(--orange-700)}
+.btn--danger{background:var(--danger-600);color:#fff}
+.btn--sm{padding:8px 14px;font-size:13px;min-height:36px;min-width:0}
+.btn--lg{padding:17px 30px;font-size:16px;min-height:56px}
+.btn--block{width:100%}
+.btn[disabled]{opacity:.55;cursor:not-allowed;transform:none;pointer-events:none}
+.btn[aria-busy="true"]{pointer-events:none}
+.spinner{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;animation:spin 800ms linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Forms */
+.field{display:block;margin-bottom:var(--s-4)}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--navy-900);margin-bottom:6px}
+.field .hint{font-size:12px;color:var(--muted);margin-top:6px}
+.field .err{font-size:12px;color:var(--danger-600);margin-top:6px;font-weight:600}
+.input,.select,.textarea{width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:var(--r-md);background:#fff;color:var(--ink);font:inherit;min-height:48px;transition:all 120ms var(--ease)}
+.input:hover,.select:hover,.textarea:hover{border-color:var(--navy-700)}
+.input:focus,.select:focus,.textarea:focus{outline:none;border-color:var(--orange-600);box-shadow:0 0 0 3px rgba(242,78,36,.18)}
+.input[aria-invalid="true"]{border-color:var(--danger-600);background:var(--danger-050)}
+.input[disabled]{background:#F4EFE9;color:var(--muted);cursor:not-allowed}
+.select{appearance:none;padding-right:44px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'><path d='M1 1.5L6 6.5L11 1.5' stroke='%23082639' stroke-width='2' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 16px center}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-4)}
+.three-col{display:grid;grid-template-columns:2fr 1fr 1fr;gap:var(--s-4)}
+@media (max-width:640px){.two-col,.three-col{grid-template-columns:1fr}}
+
+.choice{display:flex;align-items:flex-start;gap:var(--s-3);padding:14px 16px;border:1.5px solid var(--border);border-radius:var(--r-md);background:#fff;cursor:pointer;transition:all 120ms var(--ease)}
+.choice:hover{border-color:var(--navy-700);background:var(--navy-050)}
+.choice input{margin:2px 0 0;accent-color:var(--orange-600);width:18px;height:18px}
+.choice[data-checked="true"]{border-color:var(--orange-600);background:var(--orange-050)}
+.choice .t{font-weight:600;color:var(--navy-900)}
+.choice .d{font-size:13px;color:var(--ink-sub);margin-top:2px}
+
+.toggle{display:inline-flex;background:var(--navy-050);padding:4px;border-radius:var(--r-pill);gap:2px}
+.toggle button{border:0;background:transparent;padding:10px 18px;border-radius:var(--r-pill);font-weight:600;color:var(--ink-sub);cursor:pointer;font-size:13px;transition:all 180ms var(--ease);font-family:inherit}
+.toggle button[aria-pressed="true"]{background:var(--navy-900);color:#fff;box-shadow:var(--sh-1)}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:var(--r-pill);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.badge--fav{background:var(--navy-900);color:#fff}
+.badge--new{background:var(--orange-050);color:var(--orange-700)}
+.badge--active{background:var(--success-050);color:var(--success-600)}
+.badge--grand{background:var(--warning-050);color:var(--warning-600)}
+.badge--partner{background:var(--sky-100);color:var(--info-600)}
+.badge--pending{background:var(--warning-050);color:var(--warning-600)}
+
+/* Alerts */
+.alert{padding:14px 16px;border-radius:var(--r-md);display:flex;gap:12px;align-items:flex-start;border:1px solid transparent;margin-bottom:var(--s-4)}
+.alert strong{display:block;margin-bottom:2px}
+.alert--info{background:var(--info-050);border-color:#B8D5E3;color:#164A66}
+.alert--success{background:var(--success-050);border-color:#B9DFC9;color:#1D6A44}
+.alert--warning{background:var(--warning-050);border-color:#E8CC89;color:#6E4800}
+.alert--danger{background:var(--danger-050);border-color:#ECBDB1;color:#8A2718}
+.alert-icon{flex-shrink:0;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700}
+.alert--info .alert-icon{background:#B8D5E3}.alert--success .alert-icon{background:#B9DFC9}.alert--warning .alert-icon{background:#E8CC89}.alert--danger .alert-icon{background:#ECBDB1}
+
+/* Cards */
+.card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:var(--s-6);transition:all 180ms var(--ease);position:relative}
+.card:hover{border-color:var(--navy-700);box-shadow:var(--sh-2);transform:translateY(-2px)}
+.card[data-selected="true"]{border-color:var(--orange-600);box-shadow:0 0 0 3px rgba(242,78,36,.15),var(--sh-2)}
+.card[data-disabled="true"]{opacity:.75;background:#F9F5EF;cursor:not-allowed}
+.card[data-disabled="true"]:hover{transform:none;box-shadow:none;border-color:var(--border)}
+.card--active{background:linear-gradient(180deg,var(--success-050),#fff);border-color:var(--success-600)}
+.card--flat{border:1px solid var(--border);box-shadow:none}
+.card--flat:hover{transform:none;box-shadow:var(--sh-1)}
+
+/* Stepper */
+.stepper{display:flex;align-items:center;gap:var(--s-3);padding:var(--s-5);background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);margin-bottom:var(--s-6);flex-wrap:wrap}
+.step{display:flex;align-items:center;gap:var(--s-3);flex:0 0 auto}
+.step .dot{width:32px;height:32px;border-radius:50%;background:var(--navy-050);color:var(--ink-sub);display:grid;place-items:center;font-weight:700;font-size:14px}
+.step[data-state="active"] .dot{background:var(--navy-900);color:#fff}
+.step[data-state="done"] .dot{background:var(--orange-600);color:#fff}
+.step[data-state="done"] .dot::after{content:"✓"}
+.step[data-state="done"] .dot span{display:none}
+.step .meta .lbl{font-weight:600;color:var(--navy-900);font-size:14px}
+.step .meta .sub{font-size:12px;color:var(--muted)}
+.step[data-state="done"] .meta .sub{color:var(--orange-600);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.step-divider{flex:1 0 24px;height:1.5px;background:var(--border);min-width:24px}
+
+/* Product grid + card */
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--s-5)}
+.p-card .ribbon{position:absolute;top:-14px;left:50%;transform:translateX(-50%)}
+.p-card .name{font-family:var(--font-d);font-size:22px;font-weight:700;color:var(--navy-900);margin:8px 0 6px}
+.p-card .desc{color:var(--ink-sub);font-size:14px;margin:0 0 var(--s-4)}
+.p-card .price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:var(--s-3)}
+.p-card .price{font-family:var(--font-d);font-size:30px;font-weight:700;color:var(--navy-900);line-height:1}
+.p-card .cadence{color:var(--muted);font-size:13px}
+.p-card .strike{text-decoration:line-through;color:var(--muted);font-size:13px}
+.p-card .features{list-style:none;padding:0;margin:0 0 var(--s-4);display:flex;flex-direction:column;gap:8px;font-size:14px}
+.p-card .features li{display:flex;gap:10px;align-items:flex-start;color:var(--ink-sub)}
+.p-card .features li::before{content:"";display:inline-block;width:16px;height:16px;flex-shrink:0;margin-top:2px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'><path d='M3 8.5l3 3 6-7' stroke='%232F8A5C' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/></svg>")}
+.p-card .disabled-note{background:var(--warning-050);border-left:3px solid var(--warning-600);padding:10px 12px;border-radius:4px;font-size:13px;color:var(--warning-600);font-weight:600;margin-bottom:var(--s-4)}
+
+/* Layout: main + summary rail */
+.with-summary{display:grid;grid-template-columns:1fr 380px;gap:var(--s-8);align-items:flex-start}
+@media (max-width:960px){.with-summary{grid-template-columns:1fr}}
+.summary{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s-6);box-shadow:var(--sh-1);position:sticky;top:calc(var(--s-6) + 80px)}
+.summary h3{margin:0 0 var(--s-3)}
+.s-row{display:flex;justify-content:space-between;align-items:flex-start;padding:var(--s-3) 0;border-bottom:1px solid var(--border);gap:var(--s-3);font-size:14px}
+.s-row:last-of-type{border-bottom:0}
+.s-row .name{font-weight:600;color:var(--navy-900)}
+.s-row .cad{font-size:12px;color:var(--muted);margin-top:2px;font-weight:400}
+.s-row .amt{font-weight:600;color:var(--navy-900);text-align:right;white-space:nowrap}
+.s-row .amt small{color:var(--muted);font-weight:400;display:block;font-size:11px}
+.s-row .free{color:var(--success-600);font-weight:700}
+.s-row .not{color:var(--muted);font-weight:500;font-size:13px}
+.summary-total{font-family:var(--font-d);font-size:22px;font-weight:700;color:var(--navy-900)}
+.summary-note{font-size:11px;color:var(--muted);margin:var(--s-3) 0 0;text-align:center;line-height:1.5}
+
+/* Tables */
+.tbl{width:100%;border-collapse:collapse;font-size:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.tbl th,.tbl td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+.tbl th{background:var(--navy-050);color:var(--navy-900);font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tr[data-clickable="true"]{cursor:pointer}
+.tbl tr[data-clickable="true"]:hover td{background:#FBF8F3}
+
+/* Tabs / persona selector */
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:5px;gap:4px;max-width:780px;margin-bottom:var(--s-6)}
+.tabs button{background:transparent;border:0;padding:14px 16px;border-radius:var(--r-md);font-weight:600;color:var(--ink-sub);cursor:pointer;font-size:14px;transition:all 180ms var(--ease);font-family:inherit}
+.tabs button[aria-selected="true"]{background:var(--navy-900);color:#fff}
+
+/* Hero for /portal & /enroll landing */
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:var(--s-10);align-items:center;padding:var(--s-10) 0}
+@media (max-width:900px){.hero{grid-template-columns:1fr}}
+.hero-card{background:var(--navy-900);color:#fff;border-radius:var(--r-xl);padding:var(--s-10);position:relative;overflow:hidden;box-shadow:var(--sh-3)}
+.hero-card::after{content:"";position:absolute;right:-80px;bottom:-80px;width:300px;height:300px;background:radial-gradient(circle,var(--orange-600) 0%,transparent 70%);opacity:.6}
+.hero-card h2{color:#fff;font-size:38px;line-height:1.1;margin:0 0 var(--s-4);position:relative}
+.hero-card p{color:#C9D3DB;max-width:46ch;position:relative}
+.hero-card .badge{background:rgba(170,207,223,.2);color:var(--sky-300);margin-bottom:var(--s-4);position:relative}
+
+/* Portal persona cards */
+.personas{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--s-5)}
+.persona-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:var(--s-6);cursor:pointer;transition:all 200ms var(--ease);position:relative;overflow:hidden}
+.persona-card:hover{border-color:var(--orange-600);transform:translateY(-3px);box-shadow:var(--sh-3)}
+.persona-card .icon{width:48px;height:48px;border-radius:12px;background:var(--orange-050);color:var(--orange-600);display:grid;place-items:center;margin-bottom:var(--s-4);font-family:var(--font-d);font-weight:700;font-size:22px}
+.persona-card .route{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--muted);background:var(--navy-050);padding:3px 8px;border-radius:4px;display:inline-block;margin-top:var(--s-3)}
+
+/* Sticky footer action bar (wizard) */
+.action-bar{position:sticky;bottom:0;background:linear-gradient(to top,var(--canvas) 60%,rgba(250,245,240,0));padding:var(--s-5) 0;margin-top:var(--s-8);display:flex;justify-content:space-between;gap:var(--s-3);align-items:center}
+
+/* Full-bleed footer */
+.site-footer{background:var(--navy-900);color:#C9D3DB;margin-top:var(--s-16);padding:var(--s-10) var(--s-6)}
+.site-footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--s-8)}
+@media (max-width:900px){.site-footer-inner{grid-template-columns:1fr 1fr}}
+.site-footer h5{color:#fff;margin:0 0 var(--s-3);font-family:var(--font-s);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.site-footer a{color:#C9D3DB;text-decoration:none;display:block;padding:4px 0;font-size:14px}
+.site-footer a:hover{color:#fff}
+.site-footer .crown-sub{color:var(--sky-300);font-size:11px;letter-spacing:.22em;text-transform:uppercase;margin-top:8px}
+
+/* Mobile prompt / handoff visual */
+.handoff{background:#0E4A39;color:#fff;border-radius:var(--r-xl);padding:var(--s-10);text-align:center}
+.handoff h2{color:#fff}
+.handoff .lock{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.1);display:grid;place-items:center;margin:0 auto var(--s-4)}
+
+/* Complete page celebration */
+.celebrate{text-align:center;padding:var(--s-10) 0}
+.celebrate .check{width:80px;height:80px;border-radius:50%;background:var(--success-050);color:var(--success-600);display:grid;place-items:center;margin:0 auto var(--s-5);font-size:36px;font-weight:700}
+
+/* Misc */
+.row{display:flex;flex-wrap:wrap;gap:var(--s-3);align-items:center}
+.stack>*+*{margin-top:var(--s-3)}
+.divider{height:1px;background:var(--border);margin:var(--s-5) 0;border:0}
+code.tok{font-family:ui-monospace,Menlo,monospace;background:var(--navy-050);padding:2px 6px;border-radius:4px;font-size:12px;color:var(--navy-900)}
+.kpi{background:var(--navy-050);border-radius:var(--r-md);padding:var(--s-4);border-left:4px solid var(--orange-600)}
+.kpi .n{font-family:var(--font-d);font-size:24px;font-weight:700;color:var(--navy-900)}
+.kpi .l{font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+
+/* Dropzone */
+.dropzone{border:1.5px dashed var(--border);border-radius:var(--r-lg);padding:var(--s-10);text-align:center;background:#fff;transition:all 180ms var(--ease)}
+.dropzone:hover{border-color:var(--orange-600);background:var(--orange-050)}
+.dropzone strong{color:var(--navy-900);font-size:15px;display:block;margin-bottom:6px}
+
+/* Decision prompts (gate questions on /enroll) */
+.gate{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s-6);box-shadow:var(--sh-1)}
+.gate-q{font-family:var(--font-d);font-size:22px;font-weight:700;color:var(--navy-900);margin:0 0 var(--s-4)}
+
+/* MFA pin input */
+.pin-row{display:flex;gap:10px;justify-content:center;margin:var(--s-6) 0}
+.pin-row input{width:52px;height:60px;text-align:center;font-family:var(--font-d);font-size:24px;font-weight:700;border:1.5px solid var(--border);border-radius:var(--r-md);background:#fff}
+.pin-row input:focus{outline:none;border-color:var(--orange-600);box-shadow:0 0 0 3px rgba(242,78,36,.18)}
+
+/* Partner banner on top of RBC-themed pages */
+.partner-banner{background:linear-gradient(135deg,#003168,#00529F);color:#fff;padding:10px 24px;font-size:13px;font-weight:500;display:flex;align-items:center;gap:10px;justify-content:center}
+.partner-banner strong{color:#FEDF01}
+
+/* Skeleton loader (checkout handoff) */
+.skeleton{height:12px;background:linear-gradient(90deg,var(--navy-050) 0%,#F1ECE4 50%,var(--navy-050) 100%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:6px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+</style>
+</head>
+<body>
+
+<!-- ======================  TOP NAV  ====================== -->
+<header class="topnav">
+  <div class="topnav-inner">
+    <a href="#/portal" class="brand" aria-label="Regal home">
+      <div class="brand-mark" aria-hidden="true">R</div>
+      <div>
+        <div class="brand-word">REGAL</div>
+        <div class="brand-sub">Credit Management</div>
+      </div>
+    </a>
+    <div class="nav-spacer"></div>
+    <nav aria-label="Primary" id="primary-nav">
+      <a class="nav-a" href="#/portal">Home</a>
+      <a class="nav-a" href="#/enroll">Enroll</a>
+      <a class="nav-a" href="#/self-serve">Self-serve</a>
+      <a class="nav-a" href="#/business-manager">BM portal</a>
+    </nav>
+    <div id="session-chip"></div>
+  </div>
+</header>
+
+<!-- ======================  BREADCRUMBS / DEBUG ROUTE  ====================== -->
+<div class="crumbs" aria-hidden="false">
+  <div class="crumbs-inner">
+    <span id="crumbs-path"></span>
+    <span class="env-chip" id="env-chip">Prototype</span>
+  </div>
+</div>
+
+<!-- ======================  APP MOUNT  ====================== -->
+<main id="app" role="main" aria-live="polite"></main>
+
+<!-- ======================  FOOTER  ====================== -->
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div>
+      <div class="brand">
+        <div class="brand-mark">R</div>
+        <div>
+          <div class="brand-word">REGAL</div>
+          <div class="brand-sub">Credit Management</div>
+        </div>
+      </div>
+      <p style="margin-top:12px;max-width:34ch">Protection in real time, all the time. Credit Block · CyberSweep · Clear Credit · Credit Build.</p>
+      <div class="crown-sub">© 2026 Regal Credit Management</div>
+    </div>
+    <div>
+      <h5>Products</h5>
+      <a href="#/enroll/products">Credit Block</a>
+      <a href="#/enroll/products">CyberSweep</a>
+      <a href="#/enroll/products">Clear Credit</a>
+      <a href="#/enroll/products">Credit Build</a>
+    </div>
+    <div>
+      <h5>Customers</h5>
+      <a href="#/self-serve">Self-serve portal</a>
+      <a href="#/self-serve/sign-up">Activate account</a>
+      <a href="#/enroll">New enrollment</a>
+      <a href="#/business-manager">Business managers</a>
+    </div>
+    <div>
+      <h5>Trust</h5>
+      <a href="#">Privacy notice</a>
+      <a href="#">Terms of service</a>
+      <a href="#">Security</a>
+      <a href="#">PCI SAQ-A posture</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   ROUTER + STATE + RENDER
+   Single-file prototype. Hash-routing mirrors TRD §10.1.
+   ========================================================= */
+
+// --- State (session-scoped; backed by DynamoDB in production) ---
+const state = {
+  session: null,                    // { persona, user, firmId, mfaVerified }
+  persona: null,                    // 'consumer' | 'self-serve' | 'bm'
+  existingCustomer: null,           // answer to gate-q 1
+  hasGroupCode: null,               // answer to gate-q 2
+  groupCode: null,                  // e.g. 'RBC-2026'
+  partnerTheme: null,               // 'rbc' | null
+  catalogSource: 'standard',        // 'standard' | 'partner'
+  billing: 'annual',                // 'annual' | 'monthly'
+  cart: {},                         // { sku: { lifecycle, price, strike? } }
+  pii: {},                          // collected details
+  coupon: null,                     // { code, discount }
+  accountNumber: null,              // assigned on complete
+  // self-serve
+  activeSubs: [
+    { sku:'credit-block', name:'Credit Block — Annual', cadence:'Renews Aug 14, 2026', amount:299, state:'active' },
+    { sku:'cybersweep-gf', name:'CyberSweep Premium', cadence:'Legacy rate', amount:1950, state:'grandfathered' }
+  ],
+  // BM
+  bm: { firm:'Aspen Family Office', firmId:'firm_aspen_001', mfaVerified:false,
+        clients: [
+          { id:'c_1201', name:'Ramirez Family Trust', status:'active', products:['Credit Block','CyberSweep Elite'], since:'Jan 2025' },
+          { id:'c_1202', name:'Nakamura Holdings',    status:'active', products:['Credit Block'],                  since:'Mar 2025' },
+          { id:'c_1203', name:'O\u2019Dell Household',  status:'pending-docs', products:['Credit Block','Clear Credit'], since:'Apr 2026' },
+          { id:'c_1204', name:'Cresswell Revocable',  status:'active', products:['Credit Block','CyberSweep Elite'], since:'Nov 2024' },
+          { id:'c_1205', name:'Patel Private Office', status:'active', products:['Credit Block'], since:'Jun 2025' }
+        ]},
+};
+
+// --- Product catalog (mirrors TRD pricing rules; partner rates applied when code present) ---
+const CATALOG = {
+  'credit-block': {
+    sku:'credit-block',
+    name:'Credit Block',
+    desc:'A real-time lock on new credit applications — unlock only when you\u2019re ready.',
+    ribbon:'Customer favorite',
+    features:['24/7 real-time block','Instant unlock via app or SMS','Annual identity report','Family-member add-ons'],
+    lifecycles:{ annual:{ amount:299, cadence:'/year' }, monthly:{ amount:29, cadence:'/month' } },
+    partnerRates:{ 'RBC-2026':{ annual:{ amount:199, cadence:'/year', strike:299 } } }
+  },
+  'cybersweep': {
+    sku:'cybersweep',
+    name:'CyberSweep',
+    desc:'Proactive monitoring across dark-web, breach, and identity signals.',
+    features:['Dark-web credential monitoring','1-hour breach alerts','Restoration specialist'],
+    lifecycles:{ annual:{ amount:149, cadence:'/year' }, monthly:{ amount:14.99, cadence:'/month' } }
+  },
+  'clear-credit': {
+    sku:'clear-credit',
+    name:'Clear Credit',
+    desc:'One-time score-boost engagement with a certified analyst.',
+    features:['Analyst intake & plan','Dispute orchestration','Score report at 90 days'],
+    lifecycles:{ 'one-time':{ amount:499, cadence:'one-time' } },
+    requires:'credit-block-annual'
+  },
+  'credit-build': {
+    sku:'credit-build',
+    name:'Credit Build',
+    desc:'Structured score-improvement program with reporting support.',
+    features:['Secured tradeline','Monthly reporting','Graduation to unsecured credit'],
+    lifecycles:{ 'one-time':{ amount:null, cadence:'one-time' } },
+    requires:'credit-block-annual',
+    tbd:true   // OQ-2 in TRD: price still to be confirmed
+  }
+};
+
+const PARTNER_CATALOG = {
+  'RBC-2026': { skus:['credit-block'], name:'RBC Member Benefit' }
+};
+
+// --- Route table ---
+const ROUTES = {
+  '/portal': renderPortal,
+  '/enroll': renderEnrollHome,
+  '/enroll/group-code': renderGroupCode,
+  '/enroll/products': renderProducts,
+  '/enroll/details': renderDetails,
+  '/enroll/review': renderReview,
+  '/enroll/checkout': renderCheckout,
+  '/enroll/complete': renderComplete,
+  '/self-serve': renderSelfServeHome,
+  '/self-serve/sign-in': renderSelfServeSignIn,
+  '/self-serve/sign-up': renderSelfServeSignUp,
+  '/self-serve/subscriptions': renderSubscriptions,
+  '/self-serve/products': renderSelfServeProducts,
+  '/self-serve/checkout': renderSelfServeCheckout,
+  '/self-serve/complete': renderSelfServeComplete,
+  '/business-manager': renderBMHome,
+  '/business-manager/sign-in': renderBMSignIn,
+  '/business-manager/clients': renderBMClients,
+  '/business-manager/enroll/new': renderBMEnrollNew,
+  '/business-manager/documents': renderBMDocuments,
+  '/business-manager/complete': renderBMComplete,
+};
+
+// Dynamic routes with params
+const DYNAMIC_ROUTES = [
+  { pattern:/^\/business-manager\/clients\/([^/]+)$/, render:renderBMClientDetail },
+  { pattern:/^\/business-manager\/enroll\/([^/]+)$/,  render:renderBMEnrollExisting, excludes:['new'] }
+];
+
+function router(){
+  const hash = location.hash || '#/portal';
+  const path = hash.replace(/^#/,'');
+  const handler = ROUTES[path];
+  let html='';
+  if(handler){ html = handler(); }
+  else{
+    for(const r of DYNAMIC_ROUTES){
+      const m = path.match(r.pattern);
+      if(m){
+        if(r.excludes && r.excludes.includes(m[1])) continue;
+        html = r.render(m[1]); break;
+      }
+    }
+    if(!html) html = render404(path);
+  }
+  document.getElementById('app').innerHTML = html;
+  updateCrumbs(path);
+  updateNavActive(path);
+  updateSessionChip();
+  applyTheme();
+  window.scrollTo({top:0,behavior:'smooth'});
+  // auto-focus first heading for a11y
+  const h = document.querySelector('main h1, main h2');
+  if(h) h.setAttribute('tabindex','-1'), h.focus({preventScroll:true});
+}
+
+function updateCrumbs(path){
+  const parts = path.split('/').filter(Boolean);
+  const out = ['<a href="#/portal">regalcredit.com</a>'];
+  let acc='';
+  parts.forEach((p,i)=>{
+    acc += '/'+p;
+    const label = decodeURIComponent(p);
+    if(i===parts.length-1) out.push(`<span class="sep">/</span><span>${label}</span>`);
+    else out.push(`<span class="sep">/</span><a href="#${acc}">${label}</a>`);
+  });
+  if(parts.length===0) out.push('<span class="sep">/</span><span>portal</span>');
+  document.getElementById('crumbs-path').innerHTML = out.join('');
+}
+function updateNavActive(path){
+  document.querySelectorAll('#primary-nav .nav-a').forEach(a=>{
+    const href = a.getAttribute('href').replace('#','');
+    a.setAttribute('data-active', path===href || path.startsWith(href+'/'));
+  });
+}
+function updateSessionChip(){
+  const el = document.getElementById('session-chip');
+  if(state.session){
+    el.innerHTML = `<span class="nav-user"><span class="avatar">${state.session.user.initial}</span><span>${state.session.user.name}</span> <a class="nav-a" href="#" onclick="signOut()">Sign out</a></span>`;
+  }else{
+    el.innerHTML = '<a class="nav-a" href="#/self-serve/sign-in">Sign in</a>';
+  }
+}
+function applyTheme(){
+  document.documentElement.dataset.theme = state.partnerTheme || '';
+}
+function signOut(){ state.session=null; state.bm.mfaVerified=false; location.hash='#/portal'; }
+
+// --- Helpers ---
+function money(n){ return n==null? '—' : '$'+n.toLocaleString('en-US',{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2}); }
+function cartItems(){ return Object.entries(state.cart).map(([sku,entry])=>({sku, ...entry, product:CATALOG[sku]})); }
+function cartTotal(){
+  let t=0;
+  for(const it of cartItems()){ if(typeof it.price==='number') t+=it.price; }
+  if(state.coupon) t=Math.max(0,t-state.coupon.discount);
+  return t;
+}
+function hasAnnualCreditBlock(){
+  const cb = state.cart['credit-block'];
+  if(cb && cb.lifecycle==='annual') return true;
+  return state.activeSubs.some(s=>s.sku==='credit-block' && /annual/i.test(s.name));
+}
+function isPartnerMode(){ return state.groupCode && PARTNER_CATALOG[state.groupCode]; }
+function eligibleSkus(){
+  if(isPartnerMode()) return PARTNER_CATALOG[state.groupCode].skus;
+  return Object.keys(CATALOG);
+}
+
+// --- Reusable renderers ---
+function stepper(steps, current){
+  return `<nav class="stepper" aria-label="Progress">` + steps.map((s,i)=>{
+    const st = i<current?'done':(i===current?'active':'pending');
+    const sub = st==='done' && s.editHref ? `<span class="sub" onclick="location.hash='#${s.editHref}'">Edit</span>` : (s.sub?`<span class="sub">${s.sub}</span>`:'');
+    return `<div class="step" data-state="${st}"><div class="dot"><span>${i+1}</span></div><div class="meta"><span class="lbl">${s.label}</span>${sub}</div></div>${i<steps.length-1?'<div class="step-divider"></div>':''}`;
+  }).join('') + `</nav>`;
+}
+
+function alert(type, title, body, icon='!'){
+  const icons = {info:'i',success:'✓',warning:'!',danger:'×'};
+  return `<div class="alert alert--${type}" role="alert"><span class="alert-icon" aria-hidden="true">${icons[type]||icon}</span><div><strong>${title}</strong>${body||''}</div></div>`;
+}
+
+function productCard(sku){
+  const p = CATALOG[sku];
+  const inCart = !!state.cart[sku];
+  const partnerRate = state.groupCode && p.partnerRates && p.partnerRates[state.groupCode];
+  let lifecycles = Object.keys(p.lifecycles);
+  let activeCycle = state.billing;
+  if(!p.lifecycles[activeCycle]) activeCycle = lifecycles[0];
+  const price = partnerRate ? partnerRate[activeCycle] : p.lifecycles[activeCycle];
+
+  // Dependency: Clear Credit / Credit Build require annual Credit Block
+  let disabled=false, reason=null;
+  if(p.requires==='credit-block-annual' && !hasAnnualCreditBlock()){
+    disabled = true;
+    reason = `Requires <strong>annual</strong> Credit Block. Add it above and this will unlock.`;
+  }
+  if(p.tbd){ disabled = true; reason = `Final price pending business confirmation (OQ-2). Reach out to your account team if you\u2019d like a reservation.`; }
+
+  return `<article class="card p-card" data-selected="${inCart}" data-disabled="${disabled}">
+    ${p.ribbon?`<span class="ribbon badge badge--fav">${p.ribbon}</span>`:''}
+    <h3 class="name">${p.name}</h3>
+    <p class="desc">${p.desc}</p>
+    <div class="price-row">
+      ${price && price.strike?`<span class="strike">${money(price.strike)}</span>`:''}
+      <span class="price">${price && price.amount!=null?money(price.amount):'$TBD'}</span>
+      <span class="cadence">${price?price.cadence:''}</span>
+    </div>
+    <ul class="features">${p.features.map(f=>`<li>${f}</li>`).join('')}</ul>
+    ${disabled?`<div class="disabled-note">${reason}</div>`:''}
+    <button class="btn ${inCart?'btn--primary':'btn--ghost'} btn--block" ${disabled?'disabled':''} onclick="toggleSku('${sku}')">${inCart?'Selected ✓':'Add to plan'}</button>
+  </article>`;
+}
+
+function toggleSku(sku){
+  if(state.cart[sku]){ delete state.cart[sku]; }
+  else{
+    const p=CATALOG[sku];
+    const partnerRate = state.groupCode && p.partnerRates && p.partnerRates[state.groupCode];
+    let cycle = state.billing;
+    if(!p.lifecycles[cycle]) cycle = Object.keys(p.lifecycles)[0];
+    const price = (partnerRate ? partnerRate[cycle] : p.lifecycles[cycle]) || {};
+    state.cart[sku] = { lifecycle:cycle, price:price.amount, strike:price.strike||null, cadence:price.cadence };
+  }
+  // If CB deselected and dependents are in cart, drop them
+  if(!hasAnnualCreditBlock()){
+    ['clear-credit','credit-build'].forEach(d=>delete state.cart[d]);
+  }
+  router();
+}
+
+function summaryRail(opts={}){
+  const items = cartItems();
+  const subtotal = cartTotal() + (state.coupon?state.coupon.discount:0);
+  return `<aside class="summary" aria-label="Order summary">
+    <h3 class="h3">Order summary ${opts.editHref?`<button class="btn btn--link" style="padding:0;float:right" onclick="location.hash='#${opts.editHref}'">Edit</button>`:''}</h3>
+    ${items.length===0?'<p class="small">No products selected yet.</p>':items.map(it=>`
+      <div class="s-row">
+        <div><div class="name">${it.product.name}</div><div class="cad">${it.lifecycle==='annual'?'Billed annually':it.lifecycle==='monthly'?'Billed monthly':'One-time charge'}</div></div>
+        <div class="amt">${money(it.price)}${it.strike?`<small style="text-decoration:line-through">${money(it.strike)}</small>`:''}</div>
+      </div>`).join('')}
+    ${opts.includeGrandfathered && state.activeSubs.find(s=>s.state==='grandfathered')?`
+      <div class="s-row">
+        <div><div class="name">CyberSweep Premium <span class="badge badge--grand">Grandfathered</span></div><div class="cad">Legacy rate retained</div></div>
+        <div class="amt" style="color:var(--warning-600)">$1,950<small>/yr</small></div>
+      </div>`:''}
+    ${items.length?`<div class="s-row"><div><div class="name">Subtotal</div></div><div class="amt">${money(subtotal)}</div></div>`:''}
+    ${opts.showCoupon?`<div class="s-row"><div><div class="name">Promo code</div>${state.coupon?`<div class="cad">${state.coupon.code} applied</div>`:`<button class="btn btn--link" style="padding:0" onclick="applyCoupon()">+ Add promo code</button>`}</div>
+      <div class="amt">${state.coupon?`<span style="color:var(--success-600)">−${money(state.coupon.discount)}</span>`:'<span class="not">—</span>'}</div></div>`:''}
+    <div class="s-row"><div><div class="name summary-total">Total today</div></div><div class="amt summary-total">${money(cartTotal())}</div></div>
+    ${opts.ctaLabel?`<button class="btn btn--primary btn--block" style="margin-top:12px" onclick="location.hash='#${opts.ctaHref}'">${opts.ctaLabel}</button>`:''}
+    <p class="summary-note">Payment handled via Blackthorn on Stripe. Regal never stores card data (PCI SAQ-A).</p>
+  </aside>`;
+}
+
+function applyCoupon(){
+  const code = prompt('Enter promo code:','WELCOME15');
+  if(!code) return;
+  state.coupon = { code:code.toUpperCase(), discount:Math.min(25,cartTotal()) };
+  router();
+}
+
+/* =========================================================
+   ROUTE HANDLERS
+   ========================================================= */
+
+// --- PORTAL (the target of the button on regalcredit.com) ---
+function renderPortal(){
+  return `
+    <div class="page">
+      <section class="hero">
+        <div>
+          <span class="eyebrow">regalcredit.com · Customer portal</span>
+          <h1 class="h-display">Welcome to Regal.<br>Choose your path.</h1>
+          <p class="lede">This portal is the entry point for every enrollment and account activity at Regal. Select the option that matches you — we\u2019ll route you to the right experience.</p>
+          <div class="row" style="margin-top:24px">
+            <a class="btn btn--link" href="#/enroll">New here? Start enrollment →</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <span class="badge">One identity · regalcredit.com</span>
+          <h2>We block while you sleep.</h2>
+          <p>Credit Block · CyberSweep · Clear Credit · Credit Build. One enrollment, one identity, one pricing path.</p>
+        </div>
+      </section>
+
+      <div class="personas" style="margin-top:24px">
+        <a href="#/enroll" class="persona-card">
+          <div class="icon">C</div>
+          <h3 class="h2" style="font-size:22px">I\u2019m new to Regal</h3>
+          <p class="small" style="margin:6px 0 0">Enroll in a product for the first time, with or without a partner group code.</p>
+          <span class="route">/enroll</span>
+        </a>
+        <a href="#/self-serve" class="persona-card">
+          <div class="icon" style="background:var(--success-050);color:var(--success-600)">S</div>
+          <h3 class="h2" style="font-size:22px">I\u2019m an existing client</h3>
+          <p class="small" style="margin:6px 0 0">Sign in to manage active subscriptions, add products, or complete setup.</p>
+          <span class="route">/self-serve</span>
+        </a>
+        <a href="#/business-manager" class="persona-card">
+          <div class="icon" style="background:var(--sky-100);color:var(--info-600)">B</div>
+          <h3 class="h2" style="font-size:22px">I\u2019m a business manager</h3>
+          <p class="small" style="margin:6px 0 0">Enroll or modify services on behalf of clients in your firm. MFA required.</p>
+          <span class="route">/business-manager</span>
+        </a>
+      </div>
+
+      <div class="divider"></div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--s-4);margin-top:var(--s-5)">
+        <div class="kpi"><div class="n">1</div><div class="l">Identity model</div></div>
+        <div class="kpi"><div class="n">4</div><div class="l">Products</div></div>
+        <div class="kpi"><div class="n">SAQ-A</div><div class="l">PCI posture</div></div>
+        <div class="kpi"><div class="n">AA</div><div class="l">WCAG 2.1</div></div>
+      </div>
+    </div>`;
+}
+
+// --- /enroll (consumer landing, gate questions) ---
+function renderEnrollHome(){
+  const q1Done = state.existingCustomer !== null;
+  const q2Done = state.hasGroupCode !== null;
+  const canContinue = state.existingCustomer === false; // happy path for this surface
+  // Redirect shortcuts for clarity
+  if(state.existingCustomer === true){
+    return `<div class="page page--tight">
+      <span class="eyebrow">/enroll</span>
+      <h1 class="h1">Glad you\u2019re back.</h1>
+      <p class="lede">Since you\u2019re an existing customer, head to the self-serve portal to manage your plan.</p>
+      ${alert('info','Going to self-serve','Existing clients are keyed by account number (TRD §6.2). You\u2019ll need your account number + email.')}
+      <div class="row" style="margin-top:var(--s-5)">
+        <a class="btn btn--primary" href="#/self-serve">Open self-serve</a>
+        <button class="btn btn--link" onclick="state.existingCustomer=null;router()">I answered wrong</button>
+      </div>
+    </div>`;
+  }
+  return `
+    <div class="page page--tight">
+      <span class="eyebrow">/enroll · Public enrollment</span>
+      <h1 class="h-display">Let\u2019s get you set up.</h1>
+      <p class="lede">Before we show pricing, we need two quick answers — the catalog is always personalized to you (TRD §6.2).</p>
+
+      <section class="gate" style="margin-top:24px">
+        <h2 class="gate-q">1 · Are you an existing Regal customer?</h2>
+        <div class="two-col">
+          <label class="choice" data-checked="${state.existingCustomer===false}">
+            <input type="radio" name="existing" ${state.existingCustomer===false?'checked':''} onchange="state.existingCustomer=false;router()"/>
+            <div><div class="t">No, I\u2019m new here</div><div class="d">We\u2019ll show the standard catalog.</div></div>
+          </label>
+          <label class="choice" data-checked="${state.existingCustomer===true}">
+            <input type="radio" name="existing" ${state.existingCustomer===true?'checked':''} onchange="state.existingCustomer=true;router()"/>
+            <div><div class="t">Yes, I already have a plan</div><div class="d">We\u2019ll take you to self-serve.</div></div>
+          </label>
+        </div>
+      </section>
+
+      ${q1Done && state.existingCustomer===false ? `
+      <section class="gate" style="margin-top:20px">
+        <h2 class="gate-q">2 · Do you have a group or partner code?</h2>
+        <div class="two-col">
+          <label class="choice" data-checked="${state.hasGroupCode===false}">
+            <input type="radio" name="gc" ${state.hasGroupCode===false?'checked':''} onchange="state.hasGroupCode=false;state.groupCode=null;state.partnerTheme=null;state.catalogSource='standard';router()"/>
+            <div><div class="t">No code</div><div class="d">Show the standard catalog and pricing.</div></div>
+          </label>
+          <label class="choice" data-checked="${state.hasGroupCode===true}">
+            <input type="radio" name="gc" ${state.hasGroupCode===true?'checked':''} onchange="state.hasGroupCode=true;router()"/>
+            <div><div class="t">Yes, I have a code</div><div class="d">We\u2019ll validate it before showing prices.</div></div>
+          </label>
+        </div>
+      </section>`:''}
+
+      ${q2Done && state.hasGroupCode===true ? `
+        <div class="row" style="margin-top:24px">
+          <a class="btn btn--primary" href="#/enroll/group-code">Enter group code →</a>
+        </div>` : ''}
+      ${q2Done && state.hasGroupCode===false ? `
+        <div class="row" style="margin-top:24px">
+          <a class="btn btn--primary btn--lg" href="#/enroll/products">See your plan options →</a>
+        </div>`:''}
+    </div>`;
+}
+
+// --- /enroll/group-code ---
+function renderGroupCode(){
+  const err = state.groupCodeError;
+  return `<div class="page page--narrow">
+    ${stepper([
+      {label:'Group code'},{label:'Products'},{label:'Details'},{label:'Review'}
+    ],0)}
+    <span class="eyebrow">/enroll/group-code</span>
+    <h1 class="h1">Enter your partner code</h1>
+    <p class="lede">Your code unlocks pricing and products that were configured for your partner (TRD §5).</p>
+    <div class="field" style="margin-top:24px">
+      <label for="gc-input">Group or partner code</label>
+      <input id="gc-input" class="input" placeholder="e.g. RBC-2026" aria-invalid="${err?'true':'false'}" oninput="state.groupCodeError=null;event.target.setAttribute('aria-invalid','false')" />
+      ${err?`<div class="err">${err}</div>`:'<div class="hint">Codes are case-insensitive. Example: <code class="tok">RBC-2026</code></div>'}
+    </div>
+    ${alert('info','Tested codes','Try <code class="tok">RBC-2026</code> for partner mode, or anything else to see an invalid-code error.')}
+    <div class="action-bar">
+      <a class="btn btn--ghost" href="#/enroll">← Back</a>
+      <button class="btn btn--primary" onclick="validateGroupCode()">Validate code</button>
+    </div>
+  </div>`;
+}
+function validateGroupCode(){
+  const v = (document.getElementById('gc-input').value||'').trim().toUpperCase();
+  if(!v){ state.groupCodeError='Enter a code or go back to continue without one.'; router(); return; }
+  if(PARTNER_CATALOG[v]){
+    state.groupCode = v;
+    state.partnerTheme = v.startsWith('RBC')?'rbc':null;
+    state.catalogSource='partner';
+    state.cart = {};
+    location.hash = '#/enroll/products';
+  }else{
+    state.groupCodeError = `Code “${v}” is invalid, expired, or exhausted. Contact your partner-success manager or continue without a code.`;
+    router();
+  }
+}
+
+// --- /enroll/products ---
+function renderProducts(){
+  const skus = eligibleSkus();
+  const partnerBanner = isPartnerMode() ? `<div class="partner-banner">Member benefit applied: <strong>${PARTNER_CATALOG[state.groupCode].name}</strong> · code ${state.groupCode}</div>` : '';
+  const steps = isPartnerMode()
+    ? [{label:'Group code',editHref:'/enroll/group-code'},{label:'Products'},{label:'Details'},{label:'Review'}]
+    : [{label:'Products'},{label:'Details'},{label:'Review'},{label:'Checkout'}];
+  const currentStep = isPartnerMode() ? 1 : 0;
+
+  return `${partnerBanner}<div class="page">
+    ${stepper(steps, currentStep)}
+    <span class="eyebrow">/enroll/products</span>
+    <h1 class="h-display">Pick your foundation.</h1>
+    <p class="lede">Credit Block is the core. Add CyberSweep, Clear Credit, or Credit Build any time from your self-serve portal.</p>
+
+    <div class="row" style="margin:24px 0">
+      <div class="toggle" role="tablist" aria-label="Billing cycle">
+        <button aria-pressed="${state.billing==='annual'}" onclick="state.billing='annual';router()">Annual · save 17%</button>
+        <button aria-pressed="${state.billing==='monthly'}" onclick="state.billing='monthly';router()">Monthly</button>
+      </div>
+      ${state.billing==='annual'?'<span class="text-success" style="font-weight:600;font-size:14px">Save up to $57/year on Credit Block</span>':''}
+    </div>
+
+    <div class="with-summary">
+      <div>
+        <div class="products">
+          ${skus.map(productCard).join('')}
+        </div>
+        ${!hasAnnualCreditBlock() && Object.keys(state.cart).length>0 && state.cart['credit-block'] && state.cart['credit-block'].lifecycle==='monthly'?
+          alert('warning','Add-on products require annual Credit Block','Switch Credit Block to annual to unlock Clear Credit and Credit Build.'):''}
+        <div class="action-bar">
+          <a class="btn btn--ghost" href="#/enroll">← Back</a>
+          <a class="btn btn--primary" href="#/enroll/details" ${Object.keys(state.cart).length===0?'style="pointer-events:none;opacity:.55"':''}>Continue to details →</a>
+        </div>
+      </div>
+      ${summaryRail({ctaLabel:'Continue to details',ctaHref:'/enroll/details',showCoupon:false})}
+    </div>
+  </div>`;
+}
+
+// --- /enroll/details ---
+function renderDetails(){
+  if(Object.keys(state.cart).length===0){ location.hash='#/enroll/products'; return ''; }
+  const steps = isPartnerMode()
+    ? [{label:'Group code',editHref:'/enroll/group-code'},{label:'Products',editHref:'/enroll/products'},{label:'Details'},{label:'Review'}]
+    : [{label:'Products',editHref:'/enroll/products'},{label:'Details'},{label:'Review'},{label:'Checkout'}];
+  const currentStep = isPartnerMode() ? 2 : 1;
+  const partnerBanner = isPartnerMode() ? `<div class="partner-banner">Partner mode · <strong>${state.groupCode}</strong></div>` : '';
+  return `${partnerBanner}<div class="page page--tight">
+    ${stepper(steps, currentStep)}
+    <span class="eyebrow">/enroll/details</span>
+    <h1 class="h1">Tell us about you.</h1>
+    <p class="lede">Full PII only gets collected now, after you\u2019ve selected products (TRD §10.2). We never sell this.</p>
+    <form id="details-form" onsubmit="saveDetails(event)" style="margin-top:24px">
+      <h3 class="h3">Contact</h3>
+      <div class="two-col">
+        <div class="field"><label for="fn">First name</label><input id="fn" name="firstName" class="input" required value="${state.pii.firstName||''}"/></div>
+        <div class="field"><label for="ln">Last name</label><input id="ln" name="lastName" class="input" required value="${state.pii.lastName||''}"/></div>
+        <div class="field"><label for="em">Email <span class="small">(required)</span></label><input id="em" name="email" type="email" class="input" required value="${state.pii.email||''}"/></div>
+        <div class="field"><label for="ph">Phone <span class="small">(required)</span></label><input id="ph" name="phone" type="tel" class="input" required placeholder="(555) 010-0199" value="${state.pii.phone||''}"/></div>
+      </div>
+      <h3 class="h3" style="margin-top:var(--s-5)">Billing address</h3>
+      <div class="field"><label for="addr">Address</label><input id="addr" name="address" class="input" required value="${state.pii.address||''}"/></div>
+      <div class="field"><label for="apt">Apt, suite, unit, etc. <span class="small">(optional)</span></label><input id="apt" name="apt" class="input" value="${state.pii.apt||''}"/></div>
+      <div class="three-col">
+        <div class="field"><label for="city">City</label><input id="city" name="city" class="input" required value="${state.pii.city||''}"/></div>
+        <div class="field"><label for="st">State</label>
+          <select id="st" name="state" class="select" required>
+            <option value="">Select</option>${['CA','NY','TX','IL','WA','FL','CO','MA','OR','GA','PA','AZ','NJ','VA','NC','OH','MI','MN','MO'].map(s=>`<option ${state.pii.state===s?'selected':''}>${s}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field"><label for="zip">ZIP</label><input id="zip" name="zip" class="input" required value="${state.pii.zip||''}"/></div>
+      </div>
+      <h3 class="h3" style="margin-top:var(--s-5)">Referral</h3>
+      <div class="field">
+        <label for="adv">Were you referred by a wealth advisor? <span class="small">(optional)</span></label>
+        <input id="adv" name="advisor" class="input" placeholder="Advisor or firm name" value="${state.pii.advisor||''}"/>
+        <div class="hint">If provided, we link this enrollment to the advisor in Salesforce via <code class="tok">Wealth_Advisor_Account__c</code>.</div>
+      </div>
+      <div class="stack" style="margin-top:16px">
+        <label class="choice" data-checked="${state.pii.addFamily?'true':'false'}">
+          <input type="checkbox" name="addFamily" ${state.pii.addFamily?'checked':''}/>
+          <div><div class="t">Add a family member</div><div class="d">Optional — same transaction, same renewal cycle.</div></div>
+        </label>
+        <label class="choice" data-checked="${state.pii.agreedTerms?'true':'false'}">
+          <input type="checkbox" name="agreedTerms" required ${state.pii.agreedTerms?'checked':''}/>
+          <div><div class="t">I agree to the Terms of Service and Privacy Notice</div><div class="d">Required to continue.</div></div>
+        </label>
+      </div>
+      <div class="action-bar">
+        <a class="btn btn--ghost" href="#/enroll/products">← Back to products</a>
+        <button class="btn btn--primary" type="submit">Continue to review</button>
+      </div>
+    </form>
+  </div>`;
+}
+function saveDetails(e){
+  e.preventDefault();
+  const data = new FormData(e.target);
+  state.pii = {};
+  for(const [k,v] of data.entries()){ state.pii[k]=v; }
+  state.pii.addFamily = !!data.get('addFamily');
+  state.pii.agreedTerms = !!data.get('agreedTerms');
+  location.hash = '#/enroll/review';
+}
+
+// --- /enroll/review ---
+function renderReview(){
+  if(Object.keys(state.cart).length===0){ location.hash='#/enroll/products'; return ''; }
+  if(!state.pii.firstName){ location.hash='#/enroll/details'; return ''; }
+  const steps = isPartnerMode()
+    ? [{label:'Group code',editHref:'/enroll/group-code'},{label:'Products',editHref:'/enroll/products'},{label:'Details',editHref:'/enroll/details'},{label:'Review'}]
+    : [{label:'Products',editHref:'/enroll/products'},{label:'Details',editHref:'/enroll/details'},{label:'Review'},{label:'Checkout'}];
+  const currentStep = isPartnerMode() ? 3 : 2;
+  const partnerBanner = isPartnerMode() ? `<div class="partner-banner">Partner mode · <strong>${state.groupCode}</strong></div>` : '';
+  return `${partnerBanner}<div class="page">
+    ${stepper(steps, currentStep)}
+    <span class="eyebrow">/enroll/review</span>
+    <h1 class="h1">Review your enrollment.</h1>
+    <p class="lede">Editable until you continue to secure checkout (TRD §6.7).</p>
+
+    <div class="with-summary" style="margin-top:24px">
+      <div>
+        <div class="card card--flat">
+          <h3 class="h3">Products <a href="#/enroll/products" class="btn btn--link" style="float:right;padding:0">Edit</a></h3>
+          ${cartItems().map(it=>`
+            <div class="s-row">
+              <div><div class="name">${it.product.name}</div><div class="cad">${it.lifecycle==='annual'?'Renews annually':it.lifecycle==='monthly'?'Renews monthly':'One-time charge'}</div></div>
+              <div class="amt">${money(it.price)}</div>
+            </div>`).join('')}
+        </div>
+
+        <div class="card card--flat" style="margin-top:16px">
+          <h3 class="h3">Contact &amp; billing <a href="#/enroll/details" class="btn btn--link" style="float:right;padding:0">Edit</a></h3>
+          <p style="margin:0"><strong>${state.pii.firstName} ${state.pii.lastName}</strong><br>
+          ${state.pii.email} · ${state.pii.phone}<br>
+          ${state.pii.address}${state.pii.apt?', '+state.pii.apt:''}<br>
+          ${state.pii.city}, ${state.pii.state} ${state.pii.zip}</p>
+          ${state.pii.advisor?`<p class="small" style="margin-top:10px">Referred by <strong>${state.pii.advisor}</strong> · will link in Salesforce.</p>`:''}
+        </div>
+
+        ${alert('info','Payment handoff','On continue, you\u2019ll be redirected to Stripe-hosted checkout via Blackthorn. Regal never stores card data.')}
+
+        <div class="action-bar">
+          <a class="btn btn--ghost" href="#/enroll/details">← Back</a>
+          <a class="btn btn--primary btn--lg" href="#/enroll/checkout">Continue to secure checkout →</a>
+        </div>
+      </div>
+      ${summaryRail({editHref:'/enroll/products',showCoupon:true})}
+    </div>
+  </div>`;
+}
+
+// --- /enroll/checkout (handoff page) ---
+function renderCheckout(){
+  setTimeout(()=>{ location.hash='#/enroll/complete'; }, 2600);
+  return `<div class="page page--narrow">
+    <div class="handoff">
+      <div class="lock" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="#fff" stroke-width="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="#fff" stroke-width="2"/></svg>
+      </div>
+      <h2 class="h1" style="color:#fff">Redirecting to secure checkout…</h2>
+      <p style="color:#D3E7DE;max-width:42ch;margin:0 auto">We\u2019re handing you off to Stripe via our Blackthorn PayLink. This takes a moment.</p>
+      <div style="max-width:380px;margin:28px auto 0">
+        <div class="skeleton" style="margin-bottom:10px"></div>
+        <div class="skeleton" style="width:80%;margin-bottom:10px"></div>
+        <div class="skeleton" style="width:60%"></div>
+      </div>
+      <p class="small" style="margin-top:28px;color:#9FC6B7">PCI SAQ-A · Regal does not store card data</p>
+    </div>
+  </div>`;
+}
+
+// --- /enroll/complete ---
+function renderComplete(){
+  if(!state.accountNumber){
+    state.accountNumber = 'AC-'+Math.floor(Math.random()*9000+1000)+'-'+Math.floor(Math.random()*9000+1000);
+  }
+  return `<div class="page page--tight">
+    <div class="celebrate">
+      <div class="check" aria-hidden="true">✓</div>
+      <h1 class="h-display">You\u2019re protected.</h1>
+      <p class="lede" style="margin:0 auto">Your Regal enrollment is complete. Check your inbox — we\u2019ve sent the <strong>Important Information</strong> email with your account number and setup instructions.</p>
+    </div>
+
+    ${alert('success','Account created','Your Salesforce account number is <code class="tok">'+state.accountNumber+'</code>. You\u2019ll need it to activate self-serve or download the app.')}
+
+    <div class="two-col" style="margin-top:24px">
+      <div class="card card--flat">
+        <h3 class="h3">1 · Download the app</h3>
+        <p class="small">Manage unlocks, family alerts, and your identity report on the go.</p>
+        <div class="row" style="margin-top:12px">
+          <button class="btn btn--ghost btn--sm">App Store</button>
+          <button class="btn btn--ghost btn--sm">Play Store</button>
+        </div>
+      </div>
+      <div class="card card--flat">
+        <h3 class="h3">2 · Activate self-serve</h3>
+        <p class="small">Use your account number and email to set up a password for future changes.</p>
+        <a class="btn btn--primary btn--sm" href="#/self-serve/sign-up">Activate now</a>
+      </div>
+    </div>
+
+    <details class="card" style="margin-top:24px">
+      <summary style="cursor:pointer;font-weight:600;color:var(--navy-900)">Behind the scenes (TRD hooks)</summary>
+      <ul style="margin:12px 0 0;padding-left:20px;color:var(--ink-sub);font-size:14px">
+        <li>v2 called v1 <code class="tok">POST /orders/add</code> with <code class="tok">product2Id</code>, <code class="tok">pricingRuleId</code>, <code class="tok">idempotencyKey</code></li>
+        <li>Blackthorn returned PayLink · Stripe completed · webhook signed-verified</li>
+        <li>Salesforce: Person Account, Subscription__c, and Pricing_Audit__c rows written</li>
+        <li>Internal enrollment-notification payload emitted for ops (§7.5)</li>
+      </ul>
+    </details>
+  </div>`;
+}
+
+// =========================================================
+// SELF-SERVE
+// =========================================================
+
+function renderSelfServeHome(){
+  return `<div class="page">
+    <span class="eyebrow">/self-serve · Existing clients</span>
+    <h1 class="h-display">Welcome back.</h1>
+    <p class="lede">Manage your subscriptions, add products, or complete first-time activation.</p>
+    <div class="personas" style="margin-top:24px">
+      <a href="#/self-serve/sign-in" class="persona-card">
+        <div class="icon" style="background:var(--success-050);color:var(--success-600)">→</div>
+        <h3 class="h2" style="font-size:20px">Sign in</h3>
+        <p class="small">Use your account number and password.</p>
+        <span class="route">/self-serve/sign-in</span>
+      </a>
+      <a href="#/self-serve/sign-up" class="persona-card">
+        <div class="icon" style="background:var(--orange-050);color:var(--orange-600)">+</div>
+        <h3 class="h2" style="font-size:20px">Activate self-serve</h3>
+        <p class="small">First time in? Match your account number + email to set a password.</p>
+        <span class="route">/self-serve/sign-up</span>
+      </a>
+    </div>
+    ${alert('info','Existing client or new?','Existing clients are keyed by Salesforce account number (TRD §6.2). Check your welcome email for your <code class="tok">AC-####-####</code>.')}
+  </div>`;
+}
+
+function renderSelfServeSignIn(){
+  return `<div class="page page--narrow">
+    <span class="eyebrow">/self-serve/sign-in</span>
+    <h1 class="h1">Sign in to your account</h1>
+    <form onsubmit="doSelfServeSignIn(event)" style="margin-top:20px">
+      <div class="field"><label for="acc">Account number</label><input id="acc" class="input" placeholder="AC-1234-5678" required/></div>
+      <div class="field"><label for="pw">Password</label><input id="pw" class="input" type="password" required/></div>
+      <div class="row" style="justify-content:space-between;margin-bottom:var(--s-4)">
+        <label class="row" style="gap:6px"><input type="checkbox"/> Remember me</label>
+        <a class="btn btn--link" href="#" onclick="alert('Reset link would be sent via Keycloak email flow');return false">Forgot password?</a>
+      </div>
+      <button class="btn btn--primary btn--block">Sign in</button>
+    </form>
+    <div class="divider"></div>
+    <p class="small">First time signing in? <a href="#/self-serve/sign-up">Activate your self-serve access →</a></p>
+  </div>`;
+}
+function doSelfServeSignIn(e){
+  e.preventDefault();
+  state.session = { persona:'self-serve', user:{ name:'Priya Raman', initial:'P' }};
+  state.persona='self-serve';
+  location.hash = '#/self-serve/subscriptions';
+}
+
+function renderSelfServeSignUp(){
+  return `<div class="page page--narrow">
+    <span class="eyebrow">/self-serve/sign-up</span>
+    <h1 class="h1">Activate your self-serve access</h1>
+    <p class="lede">First-time activation requires matching your account number with the email on file (TRD §6.5).</p>
+    <form onsubmit="doSelfServeSignUp(event)" style="margin-top:20px">
+      <div class="field"><label for="acc2">Account number</label><input id="acc2" class="input" placeholder="AC-1234-5678" required/></div>
+      <div class="field"><label for="em2">Email on file</label><input id="em2" class="input" type="email" required/></div>
+      <div class="field"><label for="em3">Confirm email</label><input id="em3" class="input" type="email" required/></div>
+      <div class="field"><label for="pw1">Create a password</label><input id="pw1" class="input" type="password" minlength="12" required/><div class="hint">Minimum 12 characters.</div></div>
+      <button class="btn btn--primary btn--block">Activate self-serve</button>
+    </form>
+  </div>`;
+}
+function doSelfServeSignUp(e){
+  e.preventDefault();
+  state.session = { persona:'self-serve', user:{ name:'Priya Raman', initial:'P' }};
+  state.persona='self-serve';
+  location.hash='#/self-serve/subscriptions';
+}
+
+function renderSubscriptions(){
+  if(!state.session || state.session.persona!=='self-serve'){ location.hash='#/self-serve/sign-in'; return ''; }
+  return `<div class="page">
+    <span class="eyebrow">/self-serve/subscriptions · ${state.session.user.name}</span>
+    <h1 class="h1">Your protection</h1>
+    <p class="lede">All your active subscriptions in one view. Add or change products anytime.</p>
+
+    <div class="products" style="margin-top:24px">
+      ${state.activeSubs.map(s=>`
+        <article class="card ${s.state==='active'?'card--active':''}">
+          <div>${s.state==='active'?'<span class="badge badge--active">Active</span>':'<span class="badge badge--grand">Grandfathered</span>'}</div>
+          <h3 class="h2" style="font-size:22px;margin-top:6px">${s.name}</h3>
+          <p class="small">${s.cadence}</p>
+          <div class="price-row"><span class="price" style="font-family:var(--font-d);font-size:26px;font-weight:700">${money(s.amount)}</span><span class="cadence"> /yr</span></div>
+          ${s.state==='grandfathered'?alert('warning','Legacy rate retained','Switching to current CyberSweep pricing ends this rate permanently.'):''}
+          <div class="row">
+            <a class="btn btn--ghost btn--sm" href="#/self-serve/products">Manage</a>
+          </div>
+        </article>`).join('')}
+    </div>
+
+    <div class="divider"></div>
+    <h2 class="h2">Recommended for you</h2>
+    <p class="small">Available because your annual Credit Block is active.</p>
+    <div class="products" style="margin-top:12px">
+      ${['clear-credit','credit-build'].map(sku=>{
+        const p=CATALOG[sku];
+        const cycle=Object.keys(p.lifecycles)[0];
+        const price=p.lifecycles[cycle];
+        return `<article class="card">
+          <div><span class="badge badge--new">Add-on</span></div>
+          <h3 class="h2" style="font-size:20px;margin-top:6px">${p.name}</h3>
+          <p class="small">${p.desc}</p>
+          <div class="price-row"><span class="price" style="font-family:var(--font-d);font-size:24px;font-weight:700">${p.tbd?'$TBD':money(price.amount)}</span><span class="cadence">${price.cadence}</span></div>
+          <a class="btn btn--primary btn--sm" href="#/self-serve/products">${p.tbd?'Learn more':'Add to plan'}</a>
+        </article>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+
+function renderSelfServeProducts(){
+  if(!state.session){ location.hash='#/self-serve/sign-in'; return ''; }
+  const eligible = ['clear-credit','credit-build']; // add-ons only; CB already active
+  return `<div class="page">
+    <span class="eyebrow">/self-serve/products · Add-ons</span>
+    <h1 class="h1">Available add-ons</h1>
+    <p class="lede">Credit Block annual is active, so these add-ons are available.</p>
+
+    ${alert('info','Only the delta will be charged','Your existing subscriptions stay as-is. Checkout charges only the products you add or change (TRD §6.5).')}
+
+    <div class="with-summary" style="margin-top:24px">
+      <div>
+        <div class="products">
+          ${eligible.map(productCard).join('')}
+        </div>
+        <div class="action-bar">
+          <a class="btn btn--ghost" href="#/self-serve/subscriptions">← Back</a>
+          <a class="btn btn--primary" href="#/self-serve/checkout" ${Object.keys(state.cart).length===0?'style="pointer-events:none;opacity:.55"':''}>Continue to checkout</a>
+        </div>
+      </div>
+      ${summaryRail({ctaLabel:'Continue to checkout',ctaHref:'/self-serve/checkout',showCoupon:true,includeGrandfathered:true})}
+    </div>
+  </div>`;
+}
+
+function renderSelfServeCheckout(){
+  if(!state.session){ location.hash='#/self-serve/sign-in'; return ''; }
+  return `<div class="page page--narrow">
+    <span class="eyebrow">/self-serve/checkout · Delta charge</span>
+    <h1 class="h1">Add-on charge</h1>
+    ${alert('warning','Only add-on products are charged','Your existing Credit Block and CyberSweep subscriptions aren\u2019t re-billed — they stay active on their own cycles.')}
+    <div class="summary" style="position:static">
+      <h3 class="h3">Today\u2019s charge</h3>
+      ${cartItems().map(it=>`
+        <div class="s-row"><div><div class="name">${it.product.name}</div><div class="cad">${it.lifecycle==='annual'?'Renews annually':it.lifecycle==='monthly'?'Renews monthly':'One-time charge'}</div></div><div class="amt">${money(it.price)}</div></div>
+      `).join('')}
+      <div class="s-row"><div><div class="name summary-total">Total today</div></div><div class="amt summary-total">${money(cartTotal())}</div></div>
+      <button class="btn btn--primary btn--block" style="margin-top:16px" onclick="location.hash='#/self-serve/complete'">Pay ${money(cartTotal())}</button>
+      <p class="summary-note">PayLink via Blackthorn on Stripe.</p>
+    </div>
+  </div>`;
+}
+
+function renderSelfServeComplete(){
+  return `<div class="page page--tight">
+    <div class="celebrate">
+      <div class="check">✓</div>
+      <h1 class="h-display">Add-on activated.</h1>
+      <p class="lede" style="margin:0 auto">We\u2019re sending your confirmation email now. Your new products are live.</p>
+    </div>
+    ${alert('success','Subscription extended','Your Salesforce Subscription__c was extended and a Pricing_Audit__c row was written (TRD §6.5).')}
+    <div class="action-bar" style="justify-content:center">
+      <a class="btn btn--primary" href="#/self-serve/subscriptions">Back to subscriptions</a>
+    </div>
+  </div>`;
+}
+
+// =========================================================
+// BUSINESS MANAGER
+// =========================================================
+
+function renderBMHome(){
+  return `<div class="page">
+    <span class="eyebrow">/business-manager</span>
+    <h1 class="h-display">Regal for business managers.</h1>
+    <p class="lede">Enroll or modify services on behalf of clients in your firm. All actions are audited with your BM identity and firm association.</p>
+    <div class="personas" style="margin-top:24px">
+      <a href="#/business-manager/sign-in" class="persona-card">
+        <div class="icon" style="background:var(--sky-100);color:var(--info-600)">→</div>
+        <h3 class="h2" style="font-size:22px">Sign in with MFA</h3>
+        <p class="small">Mandatory-MFA business-manager portal.</p>
+        <span class="route">/business-manager/sign-in</span>
+      </a>
+      <div class="persona-card" style="cursor:default" onclick="return false">
+        <div class="icon" style="background:var(--warning-050);color:var(--warning-600)">+</div>
+        <h3 class="h2" style="font-size:22px">Request access</h3>
+        <p class="small">Ask your firm\u2019s partner-success manager to invite you. Provisioning happens via Keycloak group assignment and Salesforce Client_Manager__c links.</p>
+        <span class="route">contact@regalcredit.com</span>
+      </div>
+    </div>
+    ${alert('info','Already on the Client Dashboard?','BMs can also enter via a deep-link from the existing Client Dashboard — same identity plane, no second sign-in.')}
+  </div>`;
+}
+
+function renderBMSignIn(){
+  if(state.session && state.session.persona==='bm' && !state.bm.mfaVerified){
+    return `<div class="page page--narrow">
+      <span class="eyebrow">/business-manager/sign-in · MFA</span>
+      <h1 class="h1">Enter your 6-digit code</h1>
+      <p class="lede">We sent a code to your authenticator app.</p>
+      <form onsubmit="verifyMFA(event)" style="margin-top:24px">
+        <div class="pin-row">
+          ${[0,1,2,3,4,5].map(i=>`<input type="tel" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Digit ${i+1}" oninput="if(this.value)this.nextElementSibling&&this.nextElementSibling.focus()"/>`).join('')}
+        </div>
+        <button class="btn btn--primary btn--block">Verify &amp; continue</button>
+      </form>
+      <div class="small" style="text-align:center;margin-top:16px"><a href="#" onclick="return false">Use a different device</a> · <a href="#" onclick="return false">Resend code</a></div>
+    </div>`;
+  }
+  return `<div class="page page--narrow">
+    <span class="eyebrow">/business-manager/sign-in</span>
+    <h1 class="h1">Business-manager sign-in</h1>
+    <form onsubmit="doBMSignIn(event)" style="margin-top:20px">
+      <div class="field"><label for="bm-em">Work email</label><input id="bm-em" class="input" type="email" required/></div>
+      <div class="field"><label for="bm-pw">Password</label><input id="bm-pw" class="input" type="password" required/></div>
+      <button class="btn btn--primary btn--block">Continue</button>
+    </form>
+    ${alert('warning','MFA is required','After password, you\u2019ll be asked for a 6-digit code.')}
+  </div>`;
+}
+function doBMSignIn(e){
+  e.preventDefault();
+  state.session = { persona:'bm', user:{ name:'Dana Price', initial:'D' }, firmId:state.bm.firmId };
+  state.persona='bm';
+  router();
+}
+function verifyMFA(e){
+  e.preventDefault();
+  state.bm.mfaVerified = true;
+  location.hash = '#/business-manager/clients';
+}
+
+function renderBMClients(){
+  if(!state.session || state.session.persona!=='bm'){ location.hash='#/business-manager/sign-in'; return ''; }
+  if(!state.bm.mfaVerified){ location.hash='#/business-manager/sign-in'; return ''; }
+  return `<div class="page">
+    <span class="eyebrow">/business-manager/clients · ${state.bm.firm}</span>
+    <div class="row" style="justify-content:space-between;align-items:flex-start">
+      <div>
+        <h1 class="h1">Your clients</h1>
+        <p class="lede">${state.bm.clients.length} assigned · firm tier Platinum · firm pricing applied automatically</p>
+      </div>
+      <div class="row"><a class="btn btn--primary" href="#/business-manager/enroll/new">+ Enroll a new client</a></div>
+    </div>
+
+    <div class="row" style="margin:16px 0;gap:var(--s-2)">
+      <input class="input" style="max-width:360px" placeholder="Search clients…"/>
+      <button class="btn btn--ghost btn--sm">All</button>
+      <button class="btn btn--ghost btn--sm">Active</button>
+      <button class="btn btn--ghost btn--sm">Pending docs</button>
+    </div>
+
+    <table class="tbl" role="table">
+      <thead><tr><th>Client</th><th>Status</th><th>Products</th><th>Client since</th><th></th></tr></thead>
+      <tbody>
+        ${state.bm.clients.map(c=>`
+          <tr data-clickable="true" onclick="location.hash='#/business-manager/clients/${c.id}'">
+            <td><strong>${c.name}</strong><br><span class="small">ID: ${c.id}</span></td>
+            <td>${c.status==='active'?'<span class="badge badge--active">Active</span>':'<span class="badge badge--pending">Pending docs</span>'}</td>
+            <td>${c.products.join(', ')}</td>
+            <td>${c.since}</td>
+            <td><a class="btn btn--link" href="#/business-manager/clients/${c.id}" onclick="event.stopPropagation()">Open →</a></td>
+          </tr>`).join('')}
+      </tbody>
+    </table>
+
+    ${alert('info','Reminder','Three clients have pending document uploads. Reminder emails are scheduled automatically if they exceed the SLA.')}
+  </div>`;
+}
+
+function renderBMClientDetail(id){
+  if(!state.session || state.session.persona!=='bm'){ location.hash='#/business-manager/sign-in'; return ''; }
+  const c = state.bm.clients.find(x=>x.id===id);
+  if(!c) return render404('/business-manager/clients/'+id);
+  return `<div class="page">
+    <span class="eyebrow">/business-manager/clients/${id}</span>
+    <div class="row" style="justify-content:space-between;align-items:flex-start">
+      <div>
+        <h1 class="h1">${c.name}</h1>
+        <p class="lede">${c.status==='active'?'Active client':'Pending documents'} · ${c.products.join(', ')}</p>
+      </div>
+      <a class="btn btn--ghost" href="#/business-manager/clients">← All clients</a>
+    </div>
+
+    <div class="two-col" style="margin-top:24px">
+      <div class="card card--flat">
+        <h3 class="h3">Current services</h3>
+        ${c.products.map(p=>`<div class="s-row"><div><div class="name">${p}</div><div class="cad">Firm rate applied</div></div><div class="amt"><span class="badge badge--active">Active</span></div></div>`).join('')}
+      </div>
+      <div class="card card--flat">
+        <h3 class="h3">Account</h3>
+        <div class="s-row"><div class="name">Client ID</div><div class="amt"><code class="tok">${c.id}</code></div></div>
+        <div class="s-row"><div class="name">Salesforce link</div><div class="amt"><code class="tok">Client_Manager__c</code></div></div>
+        <div class="s-row"><div class="name">Audit trail</div><div class="amt"><a href="#">View log →</a></div></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <h2 class="h2">Actions</h2>
+    <div class="two-col">
+      <a href="#/business-manager/enroll/${c.id}" class="card card--flat" style="text-decoration:none">
+        <h3 class="h3">Add or modify products</h3>
+        <p class="small" style="color:var(--ink-sub)">Change subscriptions, upgrade CyberSweep tier, or add a new add-on.</p>
+      </a>
+      ${c.status==='pending-docs'?`<a href="#/business-manager/documents" class="card card--flat" style="text-decoration:none">
+        <h3 class="h3">Upload pending documents</h3>
+        <p class="small" style="color:var(--ink-sub)">Finish identity documentation for this client.</p>
+      </a>`:`<div class="card card--flat"><h3 class="h3">Billing history</h3><p class="small">All invoices visible in Blackthorn.</p></div>`}
+    </div>
+  </div>`;
+}
+
+function renderBMEnrollNew(){
+  if(!state.session || state.session.persona!=='bm'){ location.hash='#/business-manager/sign-in'; return ''; }
+  return `<div class="page">
+    <span class="eyebrow">/business-manager/enroll/new</span>
+    ${stepper([{label:'Client info'},{label:'Services'},{label:'Documents'},{label:'Review'}],0)}
+    <h1 class="h1">New client enrollment</h1>
+    <p class="lede">Acting as <strong>${state.session.user.name}</strong> on behalf of <strong>${state.bm.firm}</strong>. Firm pricing will apply automatically (TRD §5.1).</p>
+
+    <form onsubmit="submitBMClient(event)" style="margin-top:24px">
+      <h3 class="h3">Client details</h3>
+      <div class="two-col">
+        <div class="field"><label>First name</label><input class="input" name="firstName" required/></div>
+        <div class="field"><label>Last name</label><input class="input" name="lastName" required/></div>
+        <div class="field"><label>Email</label><input class="input" type="email" name="email" required/></div>
+        <div class="field"><label>Phone</label><input class="input" type="tel" name="phone" required/></div>
+      </div>
+      <h3 class="h3" style="margin-top:var(--s-5)">Services for this client</h3>
+      <div class="products">
+        <article class="card" data-selected="true">
+          <div><span class="badge badge--partner">Aspen firm rate</span></div>
+          <h3 class="name" style="font-family:var(--font-d);margin:6px 0">Credit Block — Annual</h3>
+          <div class="price-row"><span class="strike">$299</span><span class="price" style="font-family:var(--font-d);font-size:28px;font-weight:700">$229</span><span class="cadence">/yr</span></div>
+          <button type="button" class="btn btn--primary btn--block">Selected ✓</button>
+        </article>
+        <article class="card">
+          <h3 class="name" style="font-family:var(--font-d);margin:6px 0">CyberSweep Elite</h3>
+          <div class="price-row"><span class="price" style="font-family:var(--font-d);font-size:28px;font-weight:700">$125</span><span class="cadence">/yr · firm rate</span></div>
+          <button type="button" class="btn btn--ghost btn--block">Add</button>
+        </article>
+      </div>
+      <div class="action-bar">
+        <a class="btn btn--ghost" href="#/business-manager/clients">← Cancel</a>
+        <button class="btn btn--primary" type="submit">Continue to documents</button>
+      </div>
+    </form>
+  </div>`;
+}
+function submitBMClient(e){ e.preventDefault(); location.hash='#/business-manager/documents'; }
+
+function renderBMEnrollExisting(id){
+  if(!state.session || state.session.persona!=='bm'){ location.hash='#/business-manager/sign-in'; return ''; }
+  const c = state.bm.clients.find(x=>x.id===id);
+  if(!c) return render404('/business-manager/enroll/'+id);
+  return `<div class="page">
+    <span class="eyebrow">/business-manager/enroll/${id} · modify</span>
+    <h1 class="h1">Modify ${c.name}</h1>
+    <p class="lede">Current services are shown as context. Only delta charges will apply at checkout.</p>
+    <div class="with-summary" style="margin-top:24px">
+      <div>
+        <h3 class="h3">Active today</h3>
+        ${c.products.map(p=>`<div class="s-row"><div><div class="name">${p}</div><div class="cad">Active · firm rate</div></div><div class="amt"><span class="badge badge--active">Active</span></div></div>`).join('')}
+        <div class="divider"></div>
+        <h3 class="h3">Available add-ons</h3>
+        <div class="products">${['clear-credit','credit-build'].map(sku=>{ state.activeSubs.push({sku:'credit-block',name:'Credit Block — Annual'}); return productCard(sku); }).join('')}</div>
+        <div class="action-bar">
+          <a class="btn btn--ghost" href="#/business-manager/clients/${id}">← Back</a>
+          <a class="btn btn--primary" href="#/business-manager/complete">Send PayLink to client</a>
+        </div>
+      </div>
+      ${summaryRail({ctaLabel:'Send PayLink',ctaHref:'/business-manager/complete',showCoupon:false})}
+    </div>
+  </div>`;
+}
+
+function renderBMDocuments(){
+  if(!state.session || state.session.persona!=='bm'){ location.hash='#/business-manager/sign-in'; return ''; }
+  return `<div class="page page--tight">
+    <span class="eyebrow">/business-manager/documents</span>
+    ${stepper([{label:'Client info',editHref:'/business-manager/enroll/new'},{label:'Services',editHref:'/business-manager/enroll/new'},{label:'Documents'},{label:'Review'}],2)}
+    <h1 class="h1">Supporting documents</h1>
+    <p class="lede">Upload identity documents now, or defer — a reminder email will return the client to this screen (TRD §6.6).</p>
+
+    <div class="dropzone" style="margin-top:20px">
+      <strong>Drop files or browse</strong>
+      <span class="small">PDF · PNG · JPG · Max 10 MB each</span>
+      <div class="row" style="justify-content:center;margin-top:12px"><button class="btn btn--ghost btn--sm">Choose files</button></div>
+    </div>
+
+    ${alert('warning','Don\u2019t have documents now?','That\u2019s fine — finish the enrollment and upload later. The system flags <code class="tok">Pending_Doc_Upload__c</code> and emails a return link.')}
+
+    <div class="action-bar">
+      <a class="btn btn--ghost" href="#/business-manager/clients">← Cancel</a>
+      <div class="row">
+        <a class="btn btn--ghost" href="#/business-manager/complete">Finish &amp; upload later</a>
+        <a class="btn btn--primary" href="#/business-manager/complete">Upload &amp; finish</a>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderBMComplete(){
+  return `<div class="page page--tight">
+    <div class="celebrate">
+      <div class="check">✓</div>
+      <h1 class="h-display">Enrollment sent.</h1>
+      <p class="lede" style="margin:0 auto">Your client will receive a secure PayLink via email. They\u2019ll appear in your dashboard once payment clears.</p>
+    </div>
+    ${alert('success','Audit trail written',`
+      <ul style="margin:8px 0 0;padding-left:18px">
+        <li>Client_Manager__c linked to ${state.session?state.session.user.name:'Dana Price'}</li>
+        <li>Pending_Doc_Upload__c flag set (reminder in 48h)</li>
+        <li>Enrollment-notification payload emitted</li>
+      </ul>`)}
+    <div class="action-bar" style="justify-content:center;gap:12px">
+      <a class="btn btn--ghost" href="#/business-manager/clients">All clients</a>
+      <a class="btn btn--primary" href="#/business-manager/enroll/new">Enroll another client</a>
+    </div>
+  </div>`;
+}
+
+// =========================================================
+// 404
+// =========================================================
+function render404(path){
+  return `<div class="page page--narrow" style="text-align:center">
+    <span class="eyebrow">404</span>
+    <h1 class="h-display">Route not mapped.</h1>
+    <p class="lede" style="margin-inline:auto">The path <code class="tok">${path}</code> isn\u2019t in the TRD §10.1 URL contract. Pick a valid surface below.</p>
+    <div class="row" style="justify-content:center;margin-top:24px">
+      <a class="btn btn--primary" href="#/portal">Go to portal</a>
+      <a class="btn btn--ghost" href="#/enroll">Start enrollment</a>
+    </div>
+  </div>`;
+}
+
+// =========================================================
+// Boot
+// =========================================================
+window.addEventListener('hashchange', router);
+window.addEventListener('load', () => {
+  if(!location.hash) location.hash = '#/portal';
+  else router();
+});
+
+// Expose for inline handlers
+window.toggleSku = toggleSku;
+window.validateGroupCode = validateGroupCode;
+window.saveDetails = saveDetails;
+window.applyCoupon = applyCoupon;
+window.doSelfServeSignIn = doSelfServeSignIn;
+window.doSelfServeSignUp = doSelfServeSignUp;
+window.doBMSignIn = doBMSignIn;
+window.verifyMFA = verifyMFA;
+window.submitBMClient = submitBMClient;
+window.signOut = signOut;
+</script>
+
+</body>
+</html>

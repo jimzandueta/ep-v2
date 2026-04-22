@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Regal Enrollment V2 — Persona Happy-Path Wireframes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --orange:#F24E24;--orange-7:#D83E15;--orange-50:#FFF1EC;
+  --navy:#082639;--navy-7:#314663;--navy-050:#E8EEF3;
+  --sky:#AACFDF;--sky-100:#DCE9F0;
+  --canvas:#FAF5F0;--surface:#FFFFFF;--border:#E3DDD5;
+  --ink:#0C1B26;--muted:#6B7C8A;--ink-sub:#3A4C5A;
+  --success:#2F8A5C;--success-50:#E8F5EE;
+  --warn:#B07200;--warn-50:#FFF4DC;
+  --danger:#B23220;--danger-50:#FDECE7;
+  --font-d:"Fraunces",Georgia,serif;
+  --font-s:"Inter",-apple-system,Segoe UI,Roboto,sans-serif;
+  --r-md:10px;--r-lg:16px;
+  --sh1:0 1px 2px rgba(8,38,57,.06);
+  --sh2:0 8px 22px rgba(8,38,57,.10);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--canvas);color:var(--ink);font-family:var(--font-s)}
+h1,h2,h3{font-family:var(--font-d);color:var(--navy)}
+.page-hdr{background:var(--navy);color:#fff;padding:36px 48px}
+.page-hdr h1{color:#fff;margin:0;font-size:34px;letter-spacing:-.01em}
+.page-hdr p{color:#C9D3DB;margin:6px 0 0;max-width:68ch}
+.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--sky);font-weight:700}
+.wrap{max-width:1400px;margin:0 auto;padding:36px 48px}
+.persona-tabs{display:flex;gap:8px;flex-wrap:wrap;padding:24px 48px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20}
+.persona-tabs button{background:transparent;border:1.5px solid var(--border);padding:10px 16px;border-radius:999px;cursor:pointer;font:inherit;font-weight:600;color:var(--ink-sub);font-size:13px}
+.persona-tabs button[aria-selected="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.persona-tabs button .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
+
+.persona-section{padding:24px 48px 72px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(170,207,223,.08),transparent 120px)}
+.persona-section h2{margin:0 0 6px;font-size:32px}
+.persona-section .sub{color:var(--ink-sub);max-width:72ch;margin-bottom:20px}
+.persona-meta{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0 24px}
+.persona-meta .chip{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 12px;font-size:12px;color:var(--ink-sub)}
+.persona-meta .chip strong{color:var(--navy)}
+
+.flow{display:flex;gap:28px;overflow-x:auto;padding:20px 4px 32px;scroll-snap-type:x mandatory}
+.step-wrap{flex:0 0 340px;scroll-snap-align:start;position:relative}
+.step-wrap + .step-wrap::before{
+  content:"";position:absolute;left:-22px;top:140px;width:16px;height:16px;
+  border-right:2px solid var(--orange);border-top:2px solid var(--orange);
+  transform:rotate(45deg)
+}
+.step-n{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.step-n .num{background:var(--orange);color:#fff;border-radius:999px;padding:3px 10px;font-size:11px;font-weight:700;letter-spacing:.05em}
+.step-n .name{font-family:var(--font-d);color:var(--navy);font-weight:600;font-size:16px}
+.step-n .route{margin-left:auto;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:var(--muted);background:var(--navy-050);padding:3px 8px;border-radius:4px}
+.wf{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--sh1);height:380px;padding:14px;display:flex;flex-direction:column;gap:8px;overflow:hidden;transition:transform .2s cubic-bezier(.2,.7,.2,1),box-shadow .2s}
+.wf:hover{transform:translateY(-2px);box-shadow:var(--sh2)}
+.wf .wf-hdr{display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.wf .wf-crown{width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,var(--orange),var(--orange-7));display:grid;place-items:center;color:#fff;font-family:var(--font-d);font-weight:700;font-size:12px}
+.wf .wf-brand{font-family:var(--font-d);font-weight:700;letter-spacing:.1em;font-size:12px;color:var(--navy)}
+.wf .wf-spacer{flex:1}
+.wf .wf-mini{font-size:10px;color:var(--muted)}
+.wf .wf-body{flex:1;display:flex;flex-direction:column;gap:8px;font-size:12px;color:var(--ink-sub)}
+.wf h4{font-family:var(--font-d);margin:2px 0 4px;font-size:16px;color:var(--navy)}
+
+/* Wireframe atoms */
+.ph-h{background:var(--navy-050);border-radius:4px;height:14px;width:70%}
+.ph-h.big{height:22px;width:86%}
+.ph-h.small{height:10px;width:50%}
+.ph-line{background:var(--navy-050);border-radius:3px;height:7px}
+.ph-line.w70{width:70%}.ph-line.w50{width:50%}.ph-line.w90{width:90%}
+
+.inp-wf{border:1.3px solid var(--border);border-radius:6px;height:30px;padding:7px 10px;font-size:11px;color:var(--muted);background:#fff;display:flex;align-items:center}
+.inp-wf.active{border-color:var(--orange);box-shadow:0 0 0 2px rgba(242,78,36,.15)}
+.inp-wf.err{border-color:var(--danger);background:var(--danger-50);color:var(--danger)}
+.btn-wf{border-radius:6px;height:32px;display:grid;place-items:center;font-weight:600;font-size:12px;cursor:default}
+.btn-wf.primary{background:var(--orange);color:#fff}
+.btn-wf.ghost{background:transparent;color:var(--navy);border:1.2px solid var(--navy)}
+.btn-wf.link{color:var(--orange);background:transparent;text-decoration:underline;height:auto}
+.btn-wf.sm{font-size:11px;height:26px}
+
+.mini-step{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted);padding:6px 0;border-bottom:1px dashed var(--border);margin-bottom:4px}
+.mini-step .c{width:16px;height:16px;border-radius:50%;background:var(--navy-050);color:var(--ink-sub);display:grid;place-items:center;font-weight:700;font-size:9px}
+.mini-step.done .c{background:var(--orange);color:#fff}
+.mini-step.done .c::after{content:"✓"}.mini-step.done .c span{display:none}
+.mini-step.active .c{background:var(--navy);color:#fff}
+.mini-step .l{flex:1}
+.mini-step .sep{width:10px;height:1.5px;background:var(--border)}
+
+.card-wf{border:1.5px solid var(--border);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:5px}
+.card-wf.sel{border-color:var(--orange);background:var(--orange-50)}
+.card-wf.dis{background:#F4EFE9;opacity:.75}
+.card-wf .title{font-family:var(--font-d);font-weight:700;font-size:13px;color:var(--navy)}
+.card-wf .pr{font-family:var(--font-d);font-weight:700;font-size:15px;color:var(--navy)}
+.card-wf .cad{font-size:10px;color:var(--muted)}
+.card-wf .dis-note{background:var(--warn-50);color:var(--warn);font-size:10px;padding:4px 6px;border-radius:4px;border-left:2px solid var(--warn)}
+
+.chip-wf{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:999px;background:var(--navy);color:#fff}
+.chip-wf.partner{background:var(--sky-100);color:var(--navy-7)}
+.chip-wf.active{background:var(--success-50);color:var(--success)}
+.chip-wf.grand{background:var(--warn-50);color:var(--warn)}
+.chip-wf.new{background:var(--orange-50);color:var(--orange-7)}
+
+.sum-row{display:flex;justify-content:space-between;font-size:11px;padding:4px 0;border-bottom:1px dashed var(--border)}
+.sum-row:last-child{border:0}
+.sum-row strong{color:var(--navy)}
+.sum-row .free{color:var(--success);font-weight:700}
+.sum-row .not{color:var(--muted);font-size:10px}
+.sum-total{font-family:var(--font-d);font-weight:700;font-size:14px;color:var(--navy);padding-top:6px;display:flex;justify-content:space-between}
+
+.alert-wf{border-radius:6px;padding:8px 10px;font-size:11px;display:flex;gap:8px;align-items:flex-start}
+.alert-wf.ok{background:var(--success-50);color:#1D6A44;border:1px solid #B9DFC9}
+.alert-wf.warn{background:var(--warn-50);color:#6E4800;border:1px solid #E8CC89}
+.alert-wf.danger{background:var(--danger-50);color:#8A2718;border:1px solid #ECBDB1}
+.alert-wf.info{background:#E5F1F7;color:#164A66;border:1px solid #B8D5E3}
+
+.deets{background:var(--navy-050);border-radius:6px;padding:10px;font-size:11px;color:var(--ink-sub)}
+.deets strong{color:var(--navy)}
+.deets ul{margin:6px 0 0;padding-left:16px}
+.deets li{margin:2px 0}
+
+.decision{border-radius:var(--r-md);padding:10px 14px;background:var(--sky-100);border-left:3px solid var(--navy);font-size:12px;color:var(--navy);font-weight:600}
+.decision em{color:var(--orange);font-style:normal;font-weight:700}
+
+.row-mini{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.row-mini .inp-wf{font-size:10px}
+
+.legend{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0;font-size:12px;color:var(--ink-sub)}
+.legend .l-dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
+.persona-1 .l-dot{background:var(--orange)}
+.persona-2 .l-dot{background:var(--sky)}
+.persona-3 .l-dot{background:var(--success)}
+.persona-4 .l-dot{background:var(--warn)}
+
+details.notes{margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:12px 16px}
+details.notes summary{cursor:pointer;font-weight:600;color:var(--navy)}
+details.notes .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:12px;font-size:13px;color:var(--ink-sub)}
+details.notes .grid div{background:var(--canvas);border-radius:6px;padding:10px 12px}
+details.notes strong{color:var(--navy)}
+
+.rbc-theme{--orange:#FEDF01;--orange-7:#FFCC00;--orange-50:#FFF7C6;--navy:#003168;--navy-7:#00529F;--navy-050:#E6EEF7}
+
+/* Scrollbar styling */
+.flow::-webkit-scrollbar{height:10px}
+.flow::-webkit-scrollbar-track{background:var(--navy-050);border-radius:8px}
+.flow::-webkit-scrollbar-thumb{background:var(--navy-7);border-radius:8px}
+
+.persona-anchor{scroll-margin-top:90px}
+@media (prefers-reduced-motion:reduce){.wf{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="page-hdr">
+  <span class="eyebrow">Enrollment V2 · happy-path wireframes</span>
+  <h1>Four personas, one platform</h1>
+  <p>Low-fi wireframes of the happy path for each primary persona in the TRD (§6.3–§6.6). Same components, same routes, different context. Pricing and eligibility resolve server-side on every step.</p>
+</header>
+
+<nav class="persona-tabs" aria-label="Jump to persona">
+  <button aria-selected="true" onclick="jump('p1')"><span class="dot" style="background:var(--orange)"></span>1 · Net-new consumer</button>
+  <button aria-selected="false" onclick="jump('p2')"><span class="dot" style="background:var(--sky)"></span>2 · RBC partner</button>
+  <button aria-selected="false" onclick="jump('p3')"><span class="dot" style="background:var(--success)"></span>3 · Existing client</button>
+  <button aria-selected="false" onclick="jump('p4')"><span class="dot" style="background:var(--warn)"></span>4 · Business manager</button>
+</nav>
+
+<!-- ==================================================== -->
+<!-- PERSONA 1 · Net-new self-managed consumer  (§6.3)    -->
+<!-- ==================================================== -->
+<section class="persona-section persona-anchor" id="p1">
+  <span class="eyebrow">Persona 1 · TRD §6.3</span>
+  <h2>Net-new self-managed consumer</h2>
+  <p class="sub">Sienna, 34, has never heard of Regal until a friend sent her the link. No group code. She wants Credit Block for herself and maybe CyberSweep.</p>
+  <div class="persona-meta">
+    <span class="chip"><strong>Entry:</strong> direct / referral link</span>
+    <span class="chip"><strong>Auth:</strong> anonymous → session on checkout</span>
+    <span class="chip"><strong>Keycloak client:</strong> consumer-web</span>
+    <span class="chip"><strong>Ends with:</strong> Important Information email + account number</span>
+  </div>
+
+  <div class="flow" aria-label="Net-new consumer happy path">
+
+    <!-- STEP 1 Landing -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">01</span><span class="name">Landing</span><span class="route">/enroll</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown">R</div><div class="wf-brand">REGAL</div><div class="wf-spacer"></div><div class="wf-mini">Sign in</div></div>
+        <div class="wf-body">
+          <h4>Protection in real time, all the time.</h4>
+          <div class="ph-line w90"></div><div class="ph-line w70"></div>
+          <div class="decision">Are you an existing customer? &nbsp; <em>No →</em></div>
+          <div class="decision">Do you have a group code? &nbsp; <em>No →</em></div>
+          <div class="btn-wf primary">Start enrollment</div>
+          <div class="btn-wf link">I'm a returning client</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 Products -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">02</span><span class="name">Catalog</span><span class="route">/enroll/products</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown">R</div><div class="wf-brand">REGAL</div><div class="wf-spacer"></div><div class="wf-mini">Step 1 of 4</div></div>
+        <div class="wf-body">
+          <div style="display:flex;gap:2px">
+            <div class="mini-step active"><div class="c"><span>1</span></div><span class="l">Products</span></div>
+            <div class="sep"></div>
+            <div class="mini-step"><div class="c"><span>2</span></div><span class="l">Details</span></div>
+            <div class="sep"></div>
+            <div class="mini-step"><div class="c"><span>3</span></div><span class="l">Review</span></div>
+          </div>
+          <div style="display:flex;gap:4px;margin:4px 0"><span class="chip-wf" style="background:var(--navy);color:#fff">Annual ⎯ save 17%</span><span class="chip-wf" style="background:var(--navy-050);color:var(--muted)">Monthly</span></div>
+          <div class="card-wf sel">
+            <div><span class="chip-wf">Customer favorite</span></div>
+            <div class="title">Credit Block</div>
+            <div><span class="pr">$299</span><span class="cad">/yr</span></div>
+            <div class="btn-wf primary sm">Selected ✓</div>
+          </div>
+          <div class="card-wf">
+            <div class="title">CyberSweep</div>
+            <div><span class="pr">$149</span><span class="cad">/yr</span></div>
+            <div class="btn-wf ghost sm">Add to plan</div>
+          </div>
+          <div class="card-wf dis">
+            <div class="title">Clear Credit</div>
+            <div class="dis-note">Requires annual Credit Block</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 Details -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">03</span><span class="name">Details</span><span class="route">/enroll/details</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown">R</div><div class="wf-brand">REGAL</div><div class="wf-spacer"></div><div class="wf-mini">Step 2 of 4</div></div>
+        <div class="wf-body">
+          <h4>Tell us about you</h4>
+          <div class="row-mini"><div class="inp-wf active">Sienna</div><div class="inp-wf">Hayes</div></div>
+          <div class="inp-wf">sienna@example.com</div>
+          <div class="inp-wf">(555) 010-0199</div>
+          <div class="ph-line small"></div>
+          <div class="inp-wf">Street address</div>
+          <div class="row-mini"><div class="inp-wf">City</div><div class="inp-wf">CA · ZIP</div></div>
+          <div class="alert-wf info">We never sell your data · PII encrypted in transit.</div>
+          <div class="btn-wf primary sm">Continue to review</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4 Review -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">04</span><span class="name">Review &amp; pay</span><span class="route">/enroll/review</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown">R</div><div class="wf-brand">REGAL</div><div class="wf-spacer"></div><div class="wf-mini">Step 3 of 4</div></div>
+        <div class="wf-body">
+          <h4>Your order</h4>
+          <div class="sum-row"><span>Credit Block — Annual<br><span class="not">auto-renews</span></span><strong>$299</strong></div>
+          <div class="sum-row"><span>CyberSweep — Annual</span><strong>$149</strong></div>
+          <div class="sum-row"><span>Promo code</span><span><span class="btn-wf link sm">+ Add</span></span></div>
+          <div class="sum-total"><span>Total today</span><span>$448.00</span></div>
+          <div class="alert-wf info">Next: Stripe-hosted secure checkout via Blackthorn.</div>
+          <div class="btn-wf primary">Continue to secure checkout</div>
+          <div class="btn-wf link sm">← Edit order</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5 External checkout -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">05</span><span class="name">PayLink</span><span class="route">stripe (external)</span></div>
+      <div class="wf" style="background:#0e4a39;color:#fff;border-color:#0e4a39">
+        <div class="wf-hdr" style="border-color:rgba(255,255,255,.2)"><div class="wf-crown" style="background:#fff;color:#0e4a39">S</div><div class="wf-brand" style="color:#fff">Stripe · Blackthorn</div></div>
+        <div class="wf-body" style="color:#D3E7DE">
+          <h4 style="color:#fff">Secure checkout</h4>
+          <div class="ph-line w90" style="background:rgba(255,255,255,.18)"></div>
+          <div class="ph-line w70" style="background:rgba(255,255,255,.14)"></div>
+          <div class="inp-wf" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff">Card number</div>
+          <div class="row-mini"><div class="inp-wf" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff">Exp</div><div class="inp-wf" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff">CVC</div></div>
+          <div class="btn-wf primary" style="background:#fff;color:#0e4a39">Pay $448.00</div>
+          <div class="ph-line small" style="background:rgba(255,255,255,.2)"></div>
+          <div style="font-size:10px;color:#9FC6B7">PCI SAQ A · Regal never stores card data</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6 Complete -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">06</span><span class="name">Complete</span><span class="route">/enroll/complete</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown">R</div><div class="wf-brand">REGAL</div><div class="wf-spacer"></div><div class="wf-mini">Done</div></div>
+        <div class="wf-body">
+          <div class="alert-wf ok"><div><strong>You're protected.</strong><br>Your account number: <code>AC-1039-2471</code></div></div>
+          <h4>Welcome, Sienna.</h4>
+          <div class="ph-line w90"></div><div class="ph-line w70"></div>
+          <div class="deets"><strong>Next up</strong>
+            <ul><li>Check your email for account setup</li><li>Download the Regal app</li><li>Activate self-serve portal</li></ul>
+          </div>
+          <div class="btn-wf primary">Download the app</div>
+          <div class="btn-wf ghost sm">Set up self-serve</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <details class="notes"><summary>Behind the scenes (TRD hooks)</summary>
+    <div class="grid">
+      <div><strong>/orders/add</strong><br>v2 calls v1 with <code>product2Id, pricingRuleId, idempotencyKey</code>. v1 creates Blackthorn Sales Doc + PayLink.</div>
+      <div><strong>Salesforce</strong><br>Post-payment: Person Account created, Subscription__c activated, Pricing_Audit__c row written.</div>
+      <div><strong>Emails</strong><br>Customer: "Important Information" + account #. Internal: enrollment-notification payload (§7.5).</div>
+      <div><strong>Reconciliation</strong><br>If callback drops, the Step Functions reconciliation job repairs the subscription write.</div>
+    </div>
+  </details>
+</section>
+
+<!-- ==================================================== -->
+<!-- PERSONA 2 · Strategic partner (RBC)  (§6.4)          -->
+<!-- ==================================================== -->
+<section class="persona-section persona-anchor" id="p2">
+  <span class="eyebrow">Persona 2 · TRD §6.4</span>
+  <h2>Strategic-partner consumer (RBC)</h2>
+  <p class="sub">Marcus follows a link from the RBC mobile app. Group code is carried in the URL. Catalog filters to the partner offering (Credit Block only, partner rate).</p>
+  <div class="persona-meta">
+    <span class="chip"><strong>Entry:</strong> RBC app deep-link with code</span>
+    <span class="chip"><strong>Auth:</strong> anonymous → session</span>
+    <span class="chip"><strong>Theme:</strong> data-theme="rbc"</span>
+    <span class="chip"><strong>Salesforce:</strong> Partner_Key__c = "RBC"</span>
+  </div>
+
+  <div class="flow" aria-label="RBC partner happy path">
+
+    <!-- STEP 1 Partner landing -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">01</span><span class="name">Partner landing</span><span class="route">/enroll?gc=RBC-2026</span></div>
+      <div class="wf" style="background:#003168;color:#fff;border-color:#003168">
+        <div class="wf-hdr" style="border-color:rgba(255,255,255,.2)">
+          <div class="wf-crown" style="background:#FEDF01;color:#003168">R</div>
+          <div class="wf-brand" style="color:#fff">RBC &times; REGAL</div>
+          <div class="wf-spacer"></div>
+          <div class="wf-mini" style="color:#A8C4FF">Powered by Regal</div>
+        </div>
+        <div class="wf-body" style="color:#C9DAFC">
+          <span class="chip-wf partner" style="background:rgba(254,223,1,.2);color:#FEDF01">Member benefit</span>
+          <h4 style="color:#fff">Your RBC protection plan.</h4>
+          <div class="ph-line w90" style="background:rgba(255,255,255,.18)"></div>
+          <div class="alert-wf ok" style="background:rgba(254,223,1,.15);color:#FEDF01;border-color:#FEDF01"><strong>Group code RBC-2026 applied.</strong></div>
+          <div class="btn-wf primary" style="background:#FEDF01;color:#003168">Continue with RBC rate</div>
+          <div style="font-size:10px;color:#A8C4FF;margin-top:4px">Not an RBC member? Continue at standard rates.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 Code validated (alt if not in URL) -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">02</span><span class="name">Code validated</span><span class="route">/enroll/group-code</span></div>
+      <div class="wf rbc-theme" style="background:#fff">
+        <div class="wf-hdr"><div class="wf-crown" style="background:linear-gradient(135deg,#003168,#00529F);color:#fff">R</div><div class="wf-brand" style="color:#003168">REGAL · RBC</div></div>
+        <div class="wf-body">
+          <h4 style="color:#003168">Enter your partner code</h4>
+          <div class="inp-wf active" style="border-color:#FEDF01;box-shadow:0 0 0 2px rgba(254,223,1,.25);color:#003168;font-weight:700">RBC-2026</div>
+          <div class="alert-wf ok"><strong>Valid partner code.</strong> RBC member pricing unlocked.</div>
+          <div class="alert-wf info">Catalog filters to your RBC offering.</div>
+          <div class="btn-wf primary" style="background:#FEDF01;color:#003168">Continue</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 Partner catalog -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">03</span><span class="name">Partner catalog</span><span class="route">/enroll/products</span></div>
+      <div class="wf" style="background:#fff">
+        <div class="wf-hdr"><div class="wf-crown" style="background:linear-gradient(135deg,#003168,#00529F);color:#fff">R</div><div class="wf-brand" style="color:#003168">REGAL · RBC</div></div>
+        <div class="wf-body">
+          <div style="display:flex;gap:2px">
+            <div class="mini-step done"><div class="c">1</div><span class="l">Code</span></div>
+            <div class="sep"></div>
+            <div class="mini-step active"><div class="c"><span>2</span></div><span class="l">Product</span></div>
+            <div class="sep"></div>
+            <div class="mini-step"><div class="c"><span>3</span></div><span class="l">Details</span></div>
+          </div>
+          <h4 style="color:#003168">Your RBC benefit</h4>
+          <div class="card-wf sel" style="border-color:#FEDF01;background:#FFF7C6">
+            <div><span class="chip-wf" style="background:#003168;color:#FEDF01">RBC rate</span></div>
+            <div class="title" style="color:#003168">Credit Block</div>
+            <div><span style="text-decoration:line-through;color:var(--muted);font-size:11px">$299</span> &nbsp; <span class="pr" style="color:#003168">$199</span><span class="cad">/yr</span></div>
+            <div class="btn-wf primary sm" style="background:#FEDF01;color:#003168">Selected ✓</div>
+          </div>
+          <div class="alert-wf info">Only Credit Block is included in the RBC offering.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4 Details -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">04</span><span class="name">Details</span><span class="route">/enroll/details</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown" style="background:linear-gradient(135deg,#003168,#00529F);color:#fff">R</div><div class="wf-brand" style="color:#003168">REGAL · RBC</div></div>
+        <div class="wf-body">
+          <h4 style="color:#003168">Your information</h4>
+          <div class="row-mini"><div class="inp-wf">Marcus</div><div class="inp-wf">Doyle</div></div>
+          <div class="inp-wf">marcus@rbc-member.com</div>
+          <div class="inp-wf">(555) 010-0888</div>
+          <div class="inp-wf">Street address</div>
+          <div class="row-mini"><div class="inp-wf">Toronto</div><div class="inp-wf">ON · M5V</div></div>
+          <div class="alert-wf info">RBC partner link recorded. Mobile credentials will work across web and app.</div>
+          <div class="btn-wf primary" style="background:#FEDF01;color:#003168">Continue to review</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5 Review -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">05</span><span class="name">Review</span><span class="route">/enroll/review</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown" style="background:linear-gradient(135deg,#003168,#00529F);color:#fff">R</div><div class="wf-brand" style="color:#003168">REGAL · RBC</div></div>
+        <div class="wf-body">
+          <h4 style="color:#003168">Your order</h4>
+          <div class="sum-row"><span>Credit Block (RBC rate)<br><span class="not">auto-renews · $199/yr</span></span><strong>$199</strong></div>
+          <div class="sum-row"><span style="color:var(--success);font-weight:700">RBC member savings</span><span class="free">−$100</span></div>
+          <div class="sum-total"><span>Total today</span><span>$199.00</span></div>
+          <div class="alert-wf info">Stripe-hosted checkout next.</div>
+          <div class="btn-wf primary" style="background:#FEDF01;color:#003168">Continue to secure checkout</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6 Complete + App -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">06</span><span class="name">Complete + app</span><span class="route">/enroll/complete</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown" style="background:linear-gradient(135deg,#003168,#00529F);color:#fff">R</div><div class="wf-brand" style="color:#003168">REGAL · RBC</div></div>
+        <div class="wf-body">
+          <div class="alert-wf ok"><div><strong>You're enrolled.</strong><br>Account: <code>AC-RBC-3387</code></div></div>
+          <h4 style="color:#003168">Welcome to Regal</h4>
+          <div class="deets"><strong>Next step</strong>
+            <ul><li>Download the app</li><li>Sign in with the same credentials</li><li>Activate your Block</li></ul>
+          </div>
+          <div class="btn-wf primary" style="background:#FEDF01;color:#003168">App Store · Play Store</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:4px">Partner on file / account manager / salesperson intentionally null for RBC (§7.5)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <details class="notes"><summary>Partner-specific rules</summary>
+    <div class="grid">
+      <div><strong>Pricing precedence</strong><br>Group pricing overrides standard for allowed products only.</div>
+      <div><strong>Tenancy</strong><br>Client is self-managed from a servicing perspective; no firm relationship until one is created later.</div>
+      <div><strong>Payload</strong><br>Partner-on-file / account-manager / salesperson remain null for RBC (§7.5).</div>
+      <div><strong>Mobile handoff</strong><br>Same credential set across self-serve and app (OQ-29 still pending).</div>
+    </div>
+  </details>
+</section>
+
+<!-- ==================================================== -->
+<!-- PERSONA 3 · Existing client self-serve  (§6.5)       -->
+<!-- ==================================================== -->
+<section class="persona-section persona-anchor" id="p3">
+  <span class="eyebrow">Persona 3 · TRD §6.5</span>
+  <h2>Existing client self-serve &amp; add-on</h2>
+  <p class="sub">Priya has annual Credit Block already. She wants to add Clear Credit before applying for a mortgage. She's already activated self-serve.</p>
+  <div class="persona-meta">
+    <span class="chip"><strong>Entry:</strong> /self-serve/sign-in</span>
+    <span class="chip"><strong>Auth:</strong> authenticated client</span>
+    <span class="chip"><strong>Charges:</strong> delta only</span>
+    <span class="chip"><strong>Salesforce:</strong> Subscription__c extended, Pricing_Audit__c appended</span>
+  </div>
+
+  <div class="flow" aria-label="Existing client happy path">
+
+    <!-- STEP 1 Sign-in -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">01</span><span class="name">Sign in</span><span class="route">/self-serve/sign-in</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown">R</div><div class="wf-brand">REGAL</div><div class="wf-spacer"></div><div class="wf-mini">Self-serve</div></div>
+        <div class="wf-body">
+          <h4>Welcome back</h4>
+          <div class="ph-line w70"></div>
+          <div class="inp-wf">Account number</div>
+          <div class="inp-wf">Password</div>
+          <div class="btn-wf primary">Sign in</div>
+          <div class="btn-wf link sm">Forgot password?</div>
+          <div class="alert-wf info">First time? <strong>Set up self-serve</strong> with your account # &amp; email.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 Subscriptions -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">02</span><span class="name">Subscriptions</span><span class="route">/self-serve/subscriptions</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown">R</div><div class="wf-brand">REGAL</div><div class="wf-spacer"></div><div class="wf-mini">Priya R.</div></div>
+        <div class="wf-body">
+          <h4>Your protection</h4>
+          <div class="card-wf" style="border-color:var(--success);background:var(--success-50)">
+            <div><span class="chip-wf active">Active</span></div>
+            <div class="title">Credit Block — Annual</div>
+            <div class="cad">Renews Aug 14, 2026 · $299/yr</div>
+          </div>
+          <div class="card-wf">
+            <div><span class="chip-wf grand">Grandfathered</span></div>
+            <div class="title">CyberSweep Premium</div>
+            <div class="cad">$1,950/yr legacy rate</div>
+          </div>
+          <div class="btn-wf primary sm">Add or change products</div>
+          <div class="btn-wf link sm">Billing history</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 Eligible add-ons -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">03</span><span class="name">Eligible add-ons</span><span class="route">/self-serve/products</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown">R</div><div class="wf-brand">REGAL</div><div class="wf-spacer"></div><div class="wf-mini">Add-ons</div></div>
+        <div class="wf-body">
+          <h4>Available for you</h4>
+          <div class="alert-wf info">Your annual Credit Block unlocks these.</div>
+          <div class="card-wf sel">
+            <div><span class="chip-wf new">Add-on</span></div>
+            <div class="title">Clear Credit</div>
+            <div><span class="pr">$499</span><span class="cad">one-time</span></div>
+            <div class="btn-wf primary sm">Selected ✓</div>
+          </div>
+          <div class="card-wf">
+            <div class="title">Credit Build</div>
+            <div class="cad">One-time · price TBD</div>
+            <div class="btn-wf ghost sm">Add</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4 Delta checkout -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">04</span><span class="name">Delta checkout</span><span class="route">/self-serve/checkout</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown">R</div><div class="wf-brand">REGAL</div><div class="wf-spacer"></div><div class="wf-mini">Priya R.</div></div>
+        <div class="wf-body">
+          <h4>Charges today</h4>
+          <div class="sum-row"><span>Clear Credit<br><span class="not">one-time</span></span><strong>$499</strong></div>
+          <div class="sum-row"><span>Credit Block · active</span><span class="not">not charged</span></div>
+          <div class="sum-row"><span>CyberSweep · grandfathered</span><span class="not">not charged</span></div>
+          <div class="sum-total"><span>Total today</span><span>$499.00</span></div>
+          <div class="alert-wf warn">Billing only applies to the add-on. Your existing subscriptions stay as-is.</div>
+          <div class="btn-wf primary sm">Continue to secure checkout</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5 Complete -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">05</span><span class="name">Complete</span><span class="route">/self-serve/complete</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown">R</div><div class="wf-brand">REGAL</div><div class="wf-spacer"></div><div class="wf-mini">Done</div></div>
+        <div class="wf-body">
+          <div class="alert-wf ok"><div><strong>Add-on activated.</strong><br>Your Clear Credit engagement starts now.</div></div>
+          <h4>What happens next</h4>
+          <div class="deets"><strong>Clear Credit path</strong>
+            <ul><li>Intro email within 10 minutes</li><li>Analyst kick-off call scheduled</li><li>Score report at 90 days</li></ul>
+          </div>
+          <div class="btn-wf ghost sm">Back to subscriptions</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <details class="notes"><summary>Existing-client rules</summary>
+    <div class="grid">
+      <div><strong>Context, not purchase</strong><br>Active products appear as context (card--active). They aren't purchasable again.</div>
+      <div><strong>Grandfathered</strong><br>Shown read-only with warning. Edits trigger warn alert before confirm (§6.8).</div>
+      <div><strong>Delta charge</strong><br>Checkout totals include only products being added or changed.</div>
+      <div><strong>Pre-fill</strong><br>Known PII pre-filled; only missing or product-specific fields are asked.</div>
+    </div>
+  </details>
+</section>
+
+<!-- ==================================================== -->
+<!-- PERSONA 4 · Business manager  (§6.6)                 -->
+<!-- ==================================================== -->
+<section class="persona-section persona-anchor" id="p4">
+  <span class="eyebrow">Persona 4 · TRD §6.6</span>
+  <h2>Business manager — new client enrollment</h2>
+  <p class="sub">Dana is a BM at "Aspen Family Office". She's onboarding a new client under the Aspen firm. Documents may not be ready today — that's okay.</p>
+  <div class="persona-meta">
+    <span class="chip"><strong>Entry:</strong> /business-manager/sign-in or Client Dashboard deep-link</span>
+    <span class="chip"><strong>Auth:</strong> MFA · business-manager-portal client</span>
+    <span class="chip"><strong>Firm:</strong> Aspen FO</span>
+    <span class="chip"><strong>Salesforce:</strong> Client_Manager__c written, pending-upload tracked</span>
+  </div>
+
+  <div class="flow" aria-label="Business manager happy path">
+
+    <!-- STEP 1 Sign in -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">01</span><span class="name">Sign in (MFA)</span><span class="route">/business-manager/sign-in</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown">R</div><div class="wf-brand">REGAL BM</div><div class="wf-spacer"></div><div class="wf-mini">Aspen FO</div></div>
+        <div class="wf-body">
+          <h4>Business manager sign-in</h4>
+          <div class="inp-wf">BM email</div>
+          <div class="inp-wf">Password</div>
+          <div class="alert-wf warn"><strong>MFA required.</strong> Enter the 6-digit code.</div>
+          <div class="inp-wf active">• • • • • •</div>
+          <div class="btn-wf primary sm">Verify &amp; sign in</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 Choose path -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">02</span><span class="name">Choose path</span><span class="route">/business-manager</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown">R</div><div class="wf-brand">REGAL BM</div><div class="wf-spacer"></div><div class="wf-mini">Dana · Aspen</div></div>
+        <div class="wf-body">
+          <h4>Welcome, Dana</h4>
+          <div class="deets"><strong>Firm:</strong> Aspen Family Office<br><strong>Tier:</strong> Platinum · <strong>Clients:</strong> 38</div>
+          <div class="card-wf sel">
+            <div class="title">Enroll a new client</div>
+            <div class="cad">Credit Block + optional add-ons</div>
+            <div class="btn-wf primary sm">Start new enrollment</div>
+          </div>
+          <div class="card-wf">
+            <div class="title">Modify an existing client</div>
+            <div class="cad">Add products, update services</div>
+            <div class="btn-wf ghost sm">Open client list</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 Client info -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">03</span><span class="name">Client info</span><span class="route">/business-manager/enroll/new</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown">R</div><div class="wf-brand">REGAL BM</div><div class="wf-spacer"></div><div class="wf-mini">New client</div></div>
+        <div class="wf-body">
+          <div style="display:flex;gap:2px">
+            <div class="mini-step active"><div class="c"><span>1</span></div><span class="l">Client</span></div>
+            <div class="sep"></div>
+            <div class="mini-step"><div class="c"><span>2</span></div><span class="l">Products</span></div>
+            <div class="sep"></div>
+            <div class="mini-step"><div class="c"><span>3</span></div><span class="l">Docs</span></div>
+            <div class="sep"></div>
+            <div class="mini-step"><div class="c"><span>4</span></div><span class="l">Review</span></div>
+          </div>
+          <h4>New client details</h4>
+          <div class="row-mini"><div class="inp-wf">First</div><div class="inp-wf">Last</div></div>
+          <div class="inp-wf">Email</div>
+          <div class="inp-wf">SSN · last 4</div>
+          <div class="alert-wf info">Aspen firm pricing applies automatically.</div>
+          <div class="btn-wf primary sm">Continue</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4 Products -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">04</span><span class="name">Select services</span><span class="route">/business-manager/enroll/new</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown">R</div><div class="wf-brand">REGAL BM</div><div class="wf-spacer"></div><div class="wf-mini">Firm pricing</div></div>
+        <div class="wf-body">
+          <h4>Services for this client</h4>
+          <div class="card-wf sel">
+            <div><span class="chip-wf">Aspen rate</span></div>
+            <div class="title">Credit Block — Annual</div>
+            <div><span style="text-decoration:line-through;color:var(--muted);font-size:11px">$299</span> &nbsp; <span class="pr">$229</span><span class="cad">/yr</span></div>
+          </div>
+          <div class="card-wf sel">
+            <div class="title">CyberSweep Elite</div>
+            <div><span class="pr">$125</span><span class="cad">/yr · firm rate</span></div>
+          </div>
+          <div class="btn-wf primary sm">Continue to docs</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5 Docs optional -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">05</span><span class="name">Documents (optional)</span><span class="route">/business-manager/documents</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown">R</div><div class="wf-brand">REGAL BM</div><div class="wf-spacer"></div><div class="wf-mini">Deferred ok</div></div>
+        <div class="wf-body">
+          <h4>Supporting documents</h4>
+          <div class="ph-line w90"></div>
+          <div style="border:1.5px dashed var(--border);border-radius:8px;padding:18px;text-align:center;color:var(--muted);font-size:11px">Drop files here or <span style="color:var(--orange);font-weight:700">browse</span><br><span style="font-size:10px">PDF · PNG · max 10 MB</span></div>
+          <div class="alert-wf warn"><strong>Don't have them now?</strong> Finish enrollment and upload later. We'll email a return link.</div>
+          <div class="btn-wf ghost sm">Finish enrollment &amp; upload later</div>
+          <div class="btn-wf primary sm">Upload &amp; continue</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6 Review + pay -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">06</span><span class="name">Review &amp; send PayLink</span><span class="route">/business-manager/enroll/new</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown">R</div><div class="wf-brand">REGAL BM</div><div class="wf-spacer"></div><div class="wf-mini">Pre-pay</div></div>
+        <div class="wf-body">
+          <h4>Review &amp; payment</h4>
+          <div class="sum-row"><span>Credit Block (Aspen rate)</span><strong>$229</strong></div>
+          <div class="sum-row"><span>CyberSweep Elite</span><strong>$125</strong></div>
+          <div class="sum-total"><span>Total</span><span>$354.00</span></div>
+          <div class="alert-wf info"><strong>Payer:</strong> client (OQ-9 default). Sends PayLink to client email.</div>
+          <div class="btn-wf primary sm">Send PayLink &amp; finish</div>
+          <div class="btn-wf link sm">Back</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 7 Complete -->
+    <div class="step-wrap">
+      <div class="step-n"><span class="num">07</span><span class="name">Complete</span><span class="route">/business-manager/complete</span></div>
+      <div class="wf">
+        <div class="wf-hdr"><div class="wf-crown">R</div><div class="wf-brand">REGAL BM</div><div class="wf-spacer"></div><div class="wf-mini">Done</div></div>
+        <div class="wf-body">
+          <div class="alert-wf ok"><div><strong>Enrollment sent.</strong><br>Client will appear in your dashboard once payment clears.</div></div>
+          <div class="deets"><strong>Audit written</strong>
+            <ul><li>Client_Manager__c linked</li><li>Pending-upload task created</li><li>Reminder scheduled (48 h)</li></ul>
+          </div>
+          <div class="btn-wf primary sm">Enroll another client</div>
+          <div class="btn-wf ghost sm">Back to dashboard</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <details class="notes"><summary>Business-manager rules</summary>
+    <div class="grid">
+      <div><strong>Authorization</strong><br>Ownership check through Client_Manager__c. Cross-tenant attempts 403 + audit.</div>
+      <div><strong>Deferred docs</strong><br>Pending_Doc_Upload__c flag; reminder email + SLA task if threshold exceeded.</div>
+      <div><strong>Payer policy</strong><br>Default = client pays (PayLink). Firm-pays branch is OQ-9 in TRD.</div>
+      <div><strong>KYC future hook</strong><br>TransUnion checkpoint is staged but not in scope for v2.</div>
+    </div>
+  </details>
+</section>
+
+<footer style="padding:32px 48px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);background:var(--surface)">
+  Regal Credit Management · Enrollment V2 · Happy-path wireframes · Drafted April 22, 2026 · Pairs with <a href="./enrollment-design-system.html" style="color:var(--orange);font-weight:600">enrollment-design-system.html</a>
+</footer>
+
+<script>
+function jump(id){
+  document.querySelectorAll('.persona-tabs button').forEach(b=>b.setAttribute('aria-selected','false'));
+  event.target.closest('button').setAttribute('aria-selected','true');
+  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+}
+// update tabs on scroll
+const ids=['p1','p2','p3','p4'];
+const tabs=[...document.querySelectorAll('.persona-tabs button')];
+const obs=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      const i=ids.indexOf(e.target.id);
+      tabs.forEach((t,j)=>t.setAttribute('aria-selected',i===j));
+    }
+  });
+},{rootMargin:"-30% 0px -60% 0px"});
+ids.forEach(i=>obs.observe(document.getElementById(i)));
+</script>
+</body>
+</html>
