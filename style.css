@@ -1,0 +1,237 @@
+/* Enrollment Pages V2 deck styles */
+:root {
+  --navy-900: #0b2639;
+  --navy-800: #102e45;
+  --navy-700: #1a3d56;
+  --navy-600: #314663;
+  --slate-400: #5a7290;
+  --slate-300: #8aa2bc;
+  --sky-300: #aacfdf;
+  --sky-200: #c9dfe9;
+  --sky-100: #e6f0f5;
+  --orange: #f24e24;
+  --orange-soft: #f97352;
+  --paper: #f5f1ea;
+  --paper-2: #ece5d9;
+  --ink: #0a1a26;
+  --rule: rgba(11, 38, 57, 0.14);
+  --rule-strong: rgba(11, 38, 57, 0.32);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+}
+
+deck-stage {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  color: var(--ink);
+  font-feature-settings: "ss01", "cv11";
+}
+
+deck-stage section {
+  background: var(--paper);
+  overflow: hidden;
+  position: relative;
+  font-family: "Inter", sans-serif;
+}
+
+/* === Display / headings === */
+.display {
+  font-family: "Inter Tight", "Inter", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+.serif {
+  font-family: "Instrument Serif", "Playfair Display", Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+.mono {
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  letter-spacing: -0.01em;
+}
+
+/* shared slide layout primitives */
+.slide-pad {
+  padding: 100px 100px 80px 100px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+
+.eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+.eyebrow.muted {
+  color: var(--slate-400);
+}
+.eyebrow.sky {
+  color: var(--sky-300);
+}
+
+/* section chrome */
+.slide-number {
+  position: absolute;
+  top: 40px;
+  right: 44px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 18px;
+  color: var(--slate-400);
+  letter-spacing: 0.08em;
+}
+.slide-footer {
+  position: absolute;
+  bottom: 36px;
+  left: 100px;
+  right: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 16px;
+  color: var(--slate-400);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Regal wordmark placeholder (original type lockup) */
+.wordmark {
+  font-family: "Inter Tight", sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  font-size: 22px;
+  color: var(--navy-900);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.wordmark .crown {
+  display: inline-block;
+  width: 18px;
+  height: 12px;
+  background:
+    radial-gradient(circle at 10% 100%, var(--navy-900) 4px, transparent 4.5px),
+    radial-gradient(circle at 50% 100%, var(--navy-900) 4px, transparent 4.5px),
+    radial-gradient(circle at 90% 100%, var(--navy-900) 4px, transparent 4.5px);
+}
+.wordmark .sub {
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  font-size: 10px;
+  color: var(--slate-400);
+}
+.wordmark.onDark {
+  color: #fff;
+}
+.wordmark.onDark .sub {
+  color: var(--sky-300);
+}
+.wordmark.onDark .crown {
+  background:
+    radial-gradient(circle at 10% 100%, var(--orange) 4px, transparent 4.5px),
+    radial-gradient(circle at 50% 100%, var(--orange) 4px, transparent 4.5px),
+    radial-gradient(circle at 90% 100%, var(--orange) 4px, transparent 4.5px);
+}
+
+/* dark slides */
+.dark {
+  background: var(--navy-900);
+  color: #e6f0f5;
+}
+.dark .eyebrow.muted {
+  color: var(--sky-300);
+}
+.dark .slide-number,
+.dark .slide-footer {
+  color: rgba(170, 207, 223, 0.6);
+}
+
+/* chip */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--navy-800);
+  background: rgba(255, 255, 255, 0.4);
+}
+.chip.dark {
+  border-color: rgba(170, 207, 223, 0.35);
+  color: var(--sky-300);
+  background: transparent;
+}
+.chip.orange {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+.chip.dot::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: currentColor;
+  display: inline-block;
+}
+
+/* cards */
+.card {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 28px 32px;
+}
+.card.dark {
+  background: var(--navy-800);
+  border-color: rgba(170, 207, 223, 0.12);
+  color: #e6f0f5;
+}
+.card.ghost {
+  background: transparent;
+  border: 1px dashed var(--rule-strong);
+}
+
+/* rules */
+.hrule {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 0;
+}
+.vrule {
+  width: 1px;
+  background: var(--rule);
+}
+
+/* small util */
+.row {
+  display: flex;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+}
+.grow {
+  flex: 1;
+}
+.center {
+  align-items: center;
+  justify-content: center;
+}
